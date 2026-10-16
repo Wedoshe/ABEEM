@@ -1072,3 +1072,215 @@
     }
   </style>
 </head>
+  
+<body>
+  <div class="app">
+
+    <!-- =====================================================
+         SCREEN 01
+    ====================================================== -->
+
+    <section class="screen active" id="screen01">
+      <div class="screen-inner">
+
+        <div class="topbar">
+          <div class="brand">ABEEM</div>
+
+          <div class="brand-subtitle">
+            Awareness-Based Early Evaluation and Management of Diabetes
+          </div>
+        </div>
+
+        <div class="hero-screen">
+
+          <div>
+            <div class="eyebrow">Community screening · Digital guide</div>
+
+            <h1 class="hero-title">
+              Make the<br />
+              risk visible.
+            </h1>
+
+            <p class="hero-copy">
+              A simpler first step toward understanding your diabetes risk —
+              bringing screening closer to the people who need it.
+            </p>
+
+            <button
+              class="primary-button"
+              type="button"
+              onclick="goToModeSelection()"
+            >
+              Begin
+              <span>→</span>
+            </button>
+
+            <div class="privacy-note">
+              No account required. Screening session only.
+            </div>
+          </div>
+
+          <div class="kit-visual">
+
+            <div class="kit-logo-box">
+              <img
+                src="logo.png"
+                alt="ABEEM"
+                onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='block';"
+              />
+
+              <div
+                id="fallbackLogo"
+                class="fake-logo"
+                style="display:none;"
+              >
+                ABEEM
+              </div>
+            </div>
+
+            <div class="kit-label">
+              Screening kit
+            </div>
+
+            <div class="kit-title">
+              Know your risk.
+            </div>
+
+            <div class="kit-tagline">
+              Screen · Understand · Act
+            </div>
+
+            <div class="kit-pills">
+              <span class="pill">Low-cost</span>
+              <span class="pill">Portable</span>
+              <span class="pill">Community-ready</span>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         SCREEN 02 — MODE
+    ====================================================== -->
+
+    <section class="screen" id="screen02">
+      <div class="screen-inner">
+
+        <div class="center-layout">
+
+          <div class="center-heading">
+            <div class="eyebrow">ABEEM · Setup</div>
+
+            <h1>
+              How will you be using ABEEM?
+            </h1>
+
+            <p>
+              ABEEM adapts the guidance to how you're using the kit —
+              while keeping the screening itself consistent.
+            </p>
+          </div>
+
+          <div class="mode-grid">
+
+            <button
+              class="mode-card"
+              id="modeSelf"
+              type="button"
+              onclick="selectMode('self')"
+            >
+              <div class="mode-check">✓</div>
+
+              <div class="mode-icon">👤</div>
+
+              <h3>
+                I'm screening myself
+              </h3>
+
+              <p>
+                Guided self-screening with step-by-step instructions
+                for completing the measurements and questionnaire.
+              </p>
+            </button>
+
+
+            <button
+              class="mode-card"
+              id="modeOther"
+              type="button"
+              onclick="selectMode('other')"
+            >
+              <div class="mode-check">✓</div>
+
+              <div class="mode-icon">🧑‍⚕️</div>
+
+              <h3>
+                I'm screening someone else
+              </h3>
+
+              <p>
+                A structured workflow for a volunteer, health worker,
+                student researcher or supervised screening setting.
+              </p>
+            </button>
+
+          </div>
+
+          <div class="mode-actions">
+            <button
+              class="primary-button"
+              id="modeContinue"
+              type="button"
+              onclick="continueFromMode()"
+              disabled
+            >
+              Continue →
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         SCREEN 03 — DIGITAL GUIDE
+    ====================================================== -->
+
+    <section class="screen guide-screen" id="screen03">
+
+      <div class="book-header">
+        <div class="book-header-title">
+          ABEEM · Digital Screening Guide
+        </div>
+
+        <div class="progress-label">
+          MEEBA
+        </div>
+      </div>
+
+
+      <div class="book-stage">
+
+        <div class="book" id="book">
+
+          <!-- SPREAD 1 -->
+          <div class="book-spread active" id="spread0">
+
+            <div class="book-page intro-page">
+
+              <div class="eyebrow">
+                ABEEM · Digital Screening Guide
+              </div>
+
+              <h2>
+                The MEEBA<br />
+                process.
+              </h2>
+
+              <p>
+                Five simple
