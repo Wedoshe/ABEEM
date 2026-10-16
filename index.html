@@ -780,32 +780,12 @@
       color: var(--green);
     }
 
-    .subsection {
-      margin-top: 35px;
-      padding-top: 30px;
-      border-top: 1px solid var(--line);
-    }
-
-    .subsection-title {
-      color: var(--green);
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
     .questionnaire-actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 15px;
       margin-top: 24px;
-    }
-
-    .questionnaire-note {
-      margin-top: 17px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.6;
-      text-align: center;
     }
 
     /* -------------------------------------------------------
@@ -897,93 +877,6 @@
     }
 
     /* -------------------------------------------------------
-       TIER 2
-    ------------------------------------------------------- */
-
-    .measurement-status {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 13px;
-      margin-top: 22px;
-    }
-
-    .measurement-choice {
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 18px;
-      padding: 18px;
-      text-align: left;
-      transition: 0.2s ease;
-    }
-
-    .measurement-choice.selected {
-      border: 2px solid var(--green);
-      background: var(--mint-2);
-    }
-
-    .measurement-choice h4 {
-      margin: 0 0 6px;
-      color: var(--green);
-    }
-
-    .measurement-choice p {
-      color: var(--muted);
-      font-size: 12px;
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    .measurement-section {
-      margin-top: 25px;
-      padding: 22px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: #fffdf8;
-    }
-
-    .measurement-section h3 {
-      font-size: 23px;
-      margin-bottom: 7px;
-    }
-
-    .measurement-section .question-help {
-      margin-bottom: 18px;
-    }
-
-    .recent-grid {
-      display: flex;
-      gap: 8px;
-      margin-top: 13px;
-      flex-wrap: wrap;
-    }
-
-    .recent-option {
-      border: 1px solid var(--line);
-      background: white;
-      color: var(--green);
-      padding: 9px 13px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .recent-option.selected {
-      background: var(--green);
-      color: white;
-      border-color: var(--green);
-    }
-
-    .tier2-warning {
-      margin-top: 20px;
-      padding: 16px 18px;
-      border-radius: 15px;
-      background: #f5eee0;
-      color: #655331;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    /* -------------------------------------------------------
        RESPONSIVE
     ------------------------------------------------------- */
 
@@ -1017,10 +910,6 @@
 
       .option-grid.two,
       .option-grid.three {
-        grid-template-columns: 1fr;
-      }
-
-      .measurement-status {
         grid-template-columns: 1fr;
       }
     }
@@ -1644,38 +1533,9 @@
             </div>
           </div>
 
-          <!-- STEP 2: Waist Circumference -->
+          <!-- STEP 2: Physical Activity -->
           <div class="questionnaire-step" id="questionStep2">
-            <div class="section-eyebrow">Section 2 · Measurements</div>
-            <label class="question-label" for="waistInput">What is your waist measurement?</label>
-            <p class="question-help">Measure around your abdomen near the level of your navel while standing relaxed.</p>
-
-            <div class="input-row">
-              <div class="input-group">
-                <label class="input-label" for="waistInput">Waist size</label>
-                <input
-                  type="number"
-                  id="waistInput"
-                  class="text-input"
-                  placeholder="e.g., 85"
-                  step="0.5"
-                  oninput="validateMeasurements()"
-                />
-              </div>
-              <div class="input-group">
-                <label class="input-label" for="waistUnit">Unit</label>
-                <select id="waistUnit" class="text-input" onchange="validateMeasurements()">
-                  <option value="cm">Centimeters (cm)</option>
-                  <option value="in">Inches (in)</option>
-                </select>
-              </div>
-            </div>
-            <div class="validation-message" id="measurementError">Please enter a valid measurement.</div>
-          </div>
-
-          <!-- STEP 3: Physical Activity -->
-          <div class="questionnaire-step" id="questionStep3">
-            <div class="section-eyebrow">Section 3 · Lifestyle</div>
+            <div class="section-eyebrow">Section 2 · Lifestyle</div>
             <label class="question-label">Do you routinely engage in physical activity?</label>
             <p class="question-help">At least 30 minutes of moderate exercise (like brisk walking, cycling, or active work) daily or regularly.</p>
 
@@ -1691,9 +1551,9 @@
             </div>
           </div>
 
-          <!-- STEP 4: Family History -->
-          <div class="questionnaire-step" id="questionStep4">
-            <div class="section-eyebrow">Section 4 · Medical History</div>
+          <!-- STEP 3: Family History -->
+          <div class="questionnaire-step" id="questionStep3">
+            <div class="section-eyebrow">Section 3 · Medical History</div>
             <label class="question-label">Is there a history of diabetes in your family?</label>
             <p class="question-help">Check if parents, siblings, or children have been diagnosed with diabetes.</p>
 
@@ -1709,9 +1569,9 @@
             </div>
           </div>
 
-          <!-- STEP 5: Blood Pressure Medication -->
-          <div class="questionnaire-step" id="questionStep5">
-            <div class="section-eyebrow">Section 5 · Clinical Factors</div>
+          <!-- STEP 4: Blood Pressure Medication -->
+          <div class="questionnaire-step" id="questionStep4">
+            <div class="section-eyebrow">Section 4 · Clinical Factors</div>
             <label class="question-label">Have you ever been diagnosed with high blood pressure?</label>
             <p class="question-help">Or currently taking prescribed medication for hypertension.</p>
 
@@ -1725,6 +1585,46 @@
                 <span class="option-description">Diagnosed or taking medication for high blood pressure.</span>
               </button>
             </div>
+          </div>
+
+          <!-- STEP 5: Waist / Hip Measurements -->
+          <div class="questionnaire-step" id="questionStep5">
+            <div class="section-eyebrow">Section 5 · Measurements</div>
+            <label class="question-label">Waist & Hip Measurements</label>
+            <p class="question-help">Enter your waist and hip measurements to determine your Waist-to-Hip Ratio (WHR).</p>
+
+            <div class="input-row">
+              <div class="input-group">
+                <label class="input-label" for="waistInput">Waist Size</label>
+                <input
+                  type="number"
+                  id="waistInput"
+                  class="text-input"
+                  placeholder="e.g., 85"
+                  step="0.5"
+                  oninput="validateMeasurements()"
+                />
+              </div>
+              <div class="input-group">
+                <label class="input-label" for="hipInput">Hip Size</label>
+                <input
+                  type="number"
+                  id="hipInput"
+                  class="text-input"
+                  placeholder="e.g., 95"
+                  step="0.5"
+                  oninput="validateMeasurements()"
+                />
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="whrUnit">Measurement Unit</label>
+              <select id="whrUnit" class="text-input" onchange="validateMeasurements()">
+                <option value="cm">Centimeters (cm)</option>
+                <option value="in">Inches (in)</option>
+              </select>
+            </div>
+            <div class="validation-message" id="measurementError">Please enter valid positive numbers for both waist and hip.</div>
           </div>
 
           <!-- STEP 6: MEDICATION -->
@@ -1895,7 +1795,6 @@
     let currentQuestionIndex = 0;
     const totalQuestionSteps = 10;
 
-    // Ordered ID sequence matching the DOM structure
     const questionStepIds = [
       'questionStep1',
       'questionStep2',
@@ -1912,7 +1811,9 @@
     let screeningData = {
       age: null,
       waist: null,
-      waistUnit: 'cm',
+      hip: null,
+      whrUnit: 'cm',
+      whr: null,
       activity: null,
       activityScore: 0,
       family: null,
@@ -2045,19 +1946,29 @@
     }
 
     function validateMeasurements() {
-      const val = parseFloat(document.getElementById('waistInput').value);
-      const unit = document.getElementById('waistUnit').value;
+      const waistVal = parseFloat(document.getElementById('waistInput').value);
+      const hipVal = parseFloat(document.getElementById('hipInput').value);
+      const unit = document.getElementById('whrUnit').value;
       const errorMsg = document.getElementById('measurementError');
-      const inputField = document.getElementById('waistInput');
+      const waistField = document.getElementById('waistInput');
+      const hipField = document.getElementById('hipInput');
 
-      if (!isNaN(val) && val > 0) {
-        screeningData.waist = val;
-        screeningData.waistUnit = unit;
-        inputField.classList.remove('invalid');
+      if (!isNaN(waistVal) && waistVal > 0 && !isNaN(hipVal) && hipVal > 0) {
+        screeningData.waist = waistVal;
+        screeningData.hip = hipVal;
+        screeningData.whrUnit = unit;
+        screeningData.whr = (waistVal / hipVal).toFixed(2);
+        waistField.classList.remove('invalid');
+        hipField.classList.remove('invalid');
         errorMsg.classList.remove('visible');
         document.getElementById('questionNextBtn').removeAttribute('disabled');
       } else {
-        inputField.classList.add('invalid');
+        if (isNaN(waistVal) || waistVal <= 0) waistField.classList.add('invalid');
+        else waistField.classList.remove('invalid');
+
+        if (isNaN(hipVal) || hipVal <= 0) hipField.classList.add('invalid');
+        else hipField.classList.remove('invalid');
+
         errorMsg.classList.add('visible');
         document.getElementById('questionNextBtn').setAttribute('disabled', 'true');
       }
@@ -2087,8 +1998,8 @@
       const activeStep = document.querySelector('.questionnaire-step.active');
       if (activeStep) {
         activeStep.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
-        if (event && event.currentTarget) {
-          event.currentTarget.classList.add('selected');
+        if (window.event && window.event.currentTarget) {
+          window.event.currentTarget.classList.add('selected');
         }
       }
 
@@ -2099,9 +2010,9 @@
       const nextBtn = document.getElementById('questionNextBtn');
       if (currentQuestionIndex === 0) {
         validateAge();
-      } else if (currentQuestionIndex === 1) {
+      } else if (currentQuestionIndex === 4) {
         validateMeasurements();
-      } else if (currentQuestionIndex >= 2 && currentQuestionIndex <= 8) {
+      } else if (currentQuestionIndex !== 0 && currentQuestionIndex !== 4 && currentQuestionIndex !== 9) {
         let hasSelected = false;
         const activeStep = document.querySelector('.questionnaire-step.active');
         if (activeStep && activeStep.querySelector('.option-button.selected')) {
@@ -2119,9 +2030,9 @@
 
     function nextQuestion() {
       if (currentQuestionIndex < totalQuestionSteps - 1) {
-        // Skip questionStepSleepDisturbance (index 8) if sleepMedication is 'yes'
+        // Skip sleep disturbance (index 8) if sleepMedication is 'yes' (at index 7)
         if (currentQuestionIndex === 7 && screeningData.sleepMedication === 'yes') {
-          currentQuestionIndex = 9; // jump directly to questionStep10
+          currentQuestionIndex = 9;
         } else {
           currentQuestionIndex++;
         }
@@ -2133,7 +2044,7 @@
 
     function previousQuestion() {
       if (currentQuestionIndex > 0) {
-        // If coming back from final step and sleepMedication was 'yes', jump back to sleepMedication step (index 7)
+        // Jump back over sleep disturbance step if sleepMedication was 'yes'
         if (currentQuestionIndex === 9 && screeningData.sleepMedication === 'yes') {
           currentQuestionIndex = 7;
         } else {
@@ -2149,23 +2060,21 @@
       else if (screeningData.age >= 55 && screeningData.age < 65) ageScore = 3;
       else if (screeningData.age >= 65) ageScore = 4;
 
-      let waistInCm = screeningData.waist;
-      if (screeningData.waistUnit === 'in') {
-        waistInCm = screeningData.waist * 2.54;
+      let whrScore = 0;
+      if (screeningData.whr) {
+        const val = parseFloat(screeningData.whr);
+        if (val >= 0.85 && val < 0.90) whrScore = 2;
+        else if (val >= 0.90) whrScore = 4;
       }
 
-      let waistScore = 0;
-      if (waistInCm >= 94 && waistInCm < 102) waistScore = 3;
-      else if (waistInCm >= 102) waistScore = 4;
-
-      const total = ageScore + waistScore + screeningData.activityScore + screeningData.familyScore + screeningData.bpScore + screeningData.sugarScore;
+      const total = ageScore + whrScore + screeningData.activityScore + screeningData.familyScore + screeningData.bpScore + screeningData.sugarScore;
       screeningData.totalScore = total;
 
-      displayResults(ageScore, waistScore);
+      displayResults(ageScore, whrScore);
       switchScreen('screen05');
     }
 
-    function displayResults(ageScore, waistScore) {
+    function displayResults(ageScore, whrScore) {
       const scoreEl = document.getElementById('resultScoreValue');
       const catEl = document.getElementById('resultCategoryTitle');
       const descEl = document.getElementById('resultDescriptionText');
@@ -2203,7 +2112,7 @@
 
       breakdownList.innerHTML = `
         <div class="breakdown-row"><span>Age Factor (${screeningData.age} yrs)</span><span class="breakdown-score">+${ageScore} pts</span></div>
-        <div class="breakdown-row"><span>Waist Measurement (${screeningData.waist} ${screeningData.waistUnit})</span><span class="breakdown-score">+${waistScore} pts</span></div>
+        <div class="breakdown-row"><span>Waist-to-Hip Ratio (${screeningData.whr || 'N/A'})</span><span class="breakdown-score">+${whrScore} pts</span></div>
         <div class="breakdown-row"><span>Physical Activity</span><span class="breakdown-score">+${screeningData.activityScore} pts</span></div>
         <div class="breakdown-row"><span>Family History</span><span class="breakdown-score">+${screeningData.familyScore} pts</span></div>
         <div class="breakdown-row"><span>Blood Pressure History</span><span class="breakdown-score">+${screeningData.bpScore} pts</span></div>
@@ -2221,7 +2130,9 @@
       screeningData = {
         age: null,
         waist: null,
-        waistUnit: 'cm',
+        hip: null,
+        whrUnit: 'cm',
+        whr: null,
         activity: null,
         activityScore: 0,
         family: null,
@@ -2241,6 +2152,7 @@
       document.getElementById('modeContinue').setAttribute('disabled', 'true');
       document.getElementById('ageInput').value = '';
       document.getElementById('waistInput').value = '';
+      document.getElementById('hipInput').value = '';
       
       switchScreen('screen01');
     }
