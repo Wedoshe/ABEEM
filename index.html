@@ -1284,3 +1284,1058 @@
 
               <p>
                 Five simple
+                
+    <!-- =====================================================
+         SCREEN 04 — QUESTIONNAIRE
+    ====================================================== -->
+
+    <section class="screen questionnaire-screen" id="screen04">
+
+      <div class="questionnaire-shell">
+
+        <div class="questionnaire-top">
+
+          <div class="brand">
+            ABEEM
+          </div>
+
+          <div
+            class="progress-label"
+            id="questionProgressLabel"
+          >
+            Step 1 of 13
+          </div>
+
+        </div>
+
+        <div class="progress-track">
+          <div
+            class="progress-fill"
+            id="questionProgress"
+          ></div>
+        </div>
+
+
+        <div class="questionnaire-card">
+
+          <!-- =================================================
+               STEP 1 — AGE
+          ================================================== -->
+
+          <div
+            class="questionnaire-step active"
+            id="questionStep1"
+          >
+
+            <div class="question-block">
+
+              <div class="section-eyebrow">
+                Tier 1 · A
+              </div>
+
+              <label
+                class="question-label"
+                for="ageInput"
+              >
+                How old is the participant?
+              </label>
+
+              <div class="question-help">
+                Enter age in completed years. This follows the
+                proposed ABEEM age scoring bands.
+              </div>
+
+              <input
+                class="text-input"
+                id="ageInput"
+                type="number"
+                min="18"
+                max="120"
+                step="1"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="Enter age"
+                oninput="handleAgeInput()"
+                onkeydown="restrictAgeKeys(event)"
+              />
+
+              <div
+                class="validation-message"
+                id="ageValidation"
+              >
+                Please enter a valid age between 18 and 120.
+              </div>
+
+              <div class="info-box">
+                <strong>Proposed scoring:</strong><br /><br />
+                Under 35 → 0 points<br />
+                35–49 → 20 points<br />
+                50+ → 30 points
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               STEP 2 — SEX
+          ================================================== -->
+
+          <div
+            class="questionnaire-step"
+            id="questionStep2"
+          >
+
+            <div class="question-block">
+
+              <div class="section-eyebrow">
+                Tier 1 · Measurement standardisation
+              </div>
+
+              <label class="question-label">
+                What is the participant's sex for this protocol?
+              </label>
+
+              <div class="question-help">
+                ABEEM's proposed waist-to-hip ratio threshold is
+                sex-specific, so this is required to calculate the
+                proposed WHR component.
+              </div>
+
+              <div class="option-grid two">
+
+                <button
+                  class="option-button"
+                  type="button"
+                  data-group="sex"
+                  data-value="male"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">Male</span>
+                  <span class="option-description">
+                    Uses the proposed male WHR threshold.
+                  </span>
+                </button>
+
+                <button
+                  class="option-button"
+                  type="button"
+                  data-group="sex"
+                  data-value="female"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">Female</span>
+                  <span class="option-description">
+                    Uses the proposed female WHR threshold.
+                  </span>
+                </button>
+
+              </div>
+
+              <div class="info-box">
+                <strong>Protocol note:</strong>
+                The WHR thresholds used here are part of the
+                proposed ABEEM modification and should not be
+                presented as the original IDRS scoring system.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               STEP 3 — FAMILY HISTORY
+          ================================================== -->
+
+          <div
+            class="questionnaire-step"
+            id="questionStep3"
+          >
+
+            <div class="question-block">
+
+              <div class="section-eyebrow">
+                Tier 1 · B
+              </div>
+
+              <label class="question-label">
+                Does either parent have diabetes?
+              </label>
+
+              <div class="question-help">
+                Select the option that best represents the
+                participant's family history.
+              </div>
+
+              <div class="option-grid">
+
+                <button
+                  class="option-button"
+                  data-group="family"
+                  data-value="neither"
+                  data-score="0"
+                  type="button"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">
+                    Neither parent
+                  </span>
+
+                  <span class="option-description">
+                    No known diabetes in either parent · 0 points
+                  </span>
+                </button>
+
+
+                <button
+                  class="option-button"
+                  data-group="family"
+                  data-value="one"
+                  data-score="10"
+                  type="button"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">
+                    One parent
+                  </span>
+
+                  <span class="option-description">
+                    One parent has diabetes · 10 points
+                  </span>
+                </button>
+
+
+                <button
+                  class="option-button"
+                  data-group="family"
+                  data-value="both"
+                  data-score="20"
+                  type="button"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">
+                    Both parents
+                  </span>
+
+                  <span class="option-description">
+                    Both parents have diabetes · 20 points
+                  </span>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               STEP 4 — ACTIVITY
+          ================================================== -->
+
+          <div
+            class="questionnaire-step"
+            id="questionStep4"
+          >
+
+            <div class="question-block">
+
+              <div class="section-eyebrow">
+                Tier 1 · D
+              </div>
+
+              <label class="question-label">
+                Which best describes physical activity?
+              </label>
+
+              <div class="question-help">
+                Choose the description that most closely matches
+                the participant's usual activity pattern.
+              </div>
+
+              <div class="option-grid">
+
+                <button
+                  class="option-button"
+                  data-group="activity"
+                  data-value="vigorous"
+                  data-score="0"
+                  type="button"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">
+                    Vigorous / strenuous
+                  </span>
+
+                  <span class="option-description">
+                    Agriculture, manual labour, heavy lifting
+                    or regular vigorous exercise · 0 points
+                  </span>
+                </button>
+
+
+                <button
+                  class="option-button"
+                  data-group="activity"
+                  data-value="moderate"
+                  data-score="10"
+                  type="button"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">
+                    Moderate / active routine
+                  </span>
+
+                  <span class="option-description">
+                    Brisk walking, active household chores
+                    or similar activity · 10 points
+                  </span>
+                </button>
+
+
+                <button
+                  class="option-button"
+                  data-group="activity"
+                  data-value="sedentary"
+                  data-score="20"
+                  type="button"
+                  onclick="selectOption(this)"
+                >
+                  <span class="option-title">
+                    Sedentary
+                  </span>
+
+                  <span class="option-description">
+                    Desk work, sitting most of the time and
+                    no regular exercise · 20 points
+                  </span>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               STEP 5 — WAIST / HIP
+          ================================================== -->
+
+          <div
+            class="questionnaire-step"
+            id="questionStep5"
+          >
+
+            <div class="question-block">
+
+              <div class="section-eyebrow">
+                Tier 1 · C
+              </div>
+
+              <label class="question-label">
+                Measure waist and hip circumference
+              </label>
+
+              <div class="question-help">
+                For the proposed ABEEM protocol, measure waist
+                circumference at the level of the navel and hip
+                circumference at the widest part of the buttocks.
+                The app will calculate the waist-to-hip ratio.
+              </div>
+
+              <div class="input-row">
+
+                <div class="input-group">
+
+                  <label
+                    class="input-label"
+                    for="waistInput"
+                  >
+                    Waist circumference · cm
+                  </label>
+
+                  <input
+                    class="text-input"
+                    id="waistInput"
+                    type="number"
+                    min="40"
+                    max="200"
+                    step="0.1"
+                    inputmode="decimal"
+                    placeholder="e.g. 88.5"
+                    oninput="handleMeasurementInput()"
+                  />
+
+                  <div
+                    class="validation-message"
+                    id="waistValidation"
+                  >
+                    Enter a waist measurement between 40 and 200 cm.
+                  </div>
+
+                </div>
+
+
+                <div class="input-group">
+
+                  <label
+                    class="input-label"
+                    for="hipInput"
+                  >
+                    Hip circumference · cm
+                  </label>
+
+                  <input
+                    class="text-input"
+                    id="hipInput"
+                    type="number"
+                    min="40"
+                    max="200"
+                    step="0.1"
+                    inputmode="decimal"
+                    placeholder="e.g. 96"
+                    oninput="handleMeasurementInput()"
+                  />
+
+                  <div
+                    class="validation-message"
+                    id="hipValidation"
+                  >
+                    Enter a hip measurement between 40 and 200 cm.
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div
+                class="result-card"
+                style="margin-top:24px; box-shadow:none;"
+              >
+
+                <div class="section-eyebrow">
+                  Calculated WHR
+                </div>
+
+                <div
+                  class="result-score"
+                  id="whrPreview"
+                  style="font-size:50px;"
+                >
+                  —
+                </div>
+
+                <div
+                  class="result-category"
+                  id="whrCategory"
+                >
+                  Enter both measurements
+                </div>
+
+              </div>
+
+              <div class="info-box">
+                <strong>Proposed ABEEM WHR scoring:</strong><br /><br />
+                Male: WHR &lt; 0.96 → 0 points;
+                WHR ≥ 0.96 → 20 points.<br /><br />
+                Female: WHR &lt; 0.88 → 0 points;
+                WHR ≥ 0.88 → 20 points.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               STEP 6 — STRESS
+          ================================================== -->
+
+          <div
+            class="questionnaire-step"
+            id="questionStep6"
+          >
+
+            <div class="question-block">
+
+              <div class="section-eyebrow">
+                Tier 1 · E · Stress
+              </div>
+
+              <label class="question-label">
+                Think about the last 30 days.
+              </label>
+
+              <div class="question-help">
+                Answer each question based on how often the
+                participant experienced the situation.
+              </div>
+
+
+              <div class="subsection">
+
+                <div class="subsection-title">
+                  1. Sleep disturbance
+                </div>
+
+                <div class="question-help">
+                  In the past month, how often have you had
+                  difficulty falling asleep or experienced broken
+                  sleep because of worries or tension?
+                </div>
+
+                <div class="option-grid three">
+
+                  <button
+                    class="option-button"
+                    data-group="stressSleep"
+                    data-value="never"
+                    data-score="0"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Never / rarely</span>
+                    <span class="option-description">0 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressSleep"
+                    data-value="sometimes"
+                    data-score="2"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Sometimes</span>
+                    <span class="option-description">2 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressSleep"
+                    data-value="often"
+                    data-score="4"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Often / always</span>
+                    <span class="option-description">4 points</span>
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="subsection">
+
+                <div class="subsection-title">
+                  2. Physical tension
+                </div>
+
+                <div class="question-help">
+                  In the past month, how often have you felt
+                  unexplained body aches, heavy headaches, or
+                  constant exhaustion because of stress?
+                </div>
+
+                <div class="option-grid three">
+
+                  <button
+                    class="option-button"
+                    data-group="stressPhysical"
+                    data-value="never"
+                    data-score="0"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Never / rarely</span>
+                    <span class="option-description">0 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressPhysical"
+                    data-value="sometimes"
+                    data-score="2"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Sometimes</span>
+                    <span class="option-description">2 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressPhysical"
+                    data-value="often"
+                    data-score="4"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Often / always</span>
+                    <span class="option-description">4 points</span>
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="subsection">
+
+                <div class="subsection-title">
+                  3. Financial / livelihood anxiety
+                </div>
+
+                <div class="question-help">
+                  In the past month, how often have you felt
+                  constantly overwhelmed or deeply anxious about
+                  household expenses, farming, job security, or
+                  family responsibility?
+                </div>
+
+                <div class="option-grid three">
+
+                  <button
+                    class="option-button"
+                    data-group="stressFinancial"
+                    data-value="never"
+                    data-score="0"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Never / rarely</span>
+                    <span class="option-description">0 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressFinancial"
+                    data-value="sometimes"
+                    data-score="2"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Sometimes</span>
+                    <span class="option-description">2 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressFinancial"
+                    data-value="often"
+                    data-score="4"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Often / always</span>
+                    <span class="option-description">4 points</span>
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="subsection">
+
+                <div class="subsection-title">
+                  4. Inability to relax
+                </div>
+
+                <div class="question-help">
+                  In the past month, how often have you found it
+                  difficult to sit peacefully, clear your mind, or
+                  feel calm even when your daily work is finished?
+                </div>
+
+                <div class="option-grid three">
+
+                  <button
+                    class="option-button"
+                    data-group="stressRelax"
+                    data-value="never"
+                    data-score="0"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Never / rarely</span>
+                    <span class="option-description">0 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressRelax"
+                    data-value="sometimes"
+                    data-score="2"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Sometimes</span>
+                    <span class="option-description">2 points</span>
+                  </button>
+
+                  <button
+                    class="option-button"
+                    data-group="stressRelax"
+                    data-value="often"
+                    data-score="4"
+                    type="button"
+                    onclick="selectOption(this)"
+                  >
+                    <span class="option-title">Often / always</span>
+                    <span class="option-description">4 points</span>
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="info-box">
+                <strong>Proposed stress scoring:</strong><br /><br />
+                0–4 → Low stress → +0<br />
+                5–9 → Moderate stress → +10<br />
+                10–16 → High stress → +20
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               STEP 7 — ALCOHOL
+          ================================================== -->
+
+          <div
+            class="questionnaire-step"
+            id="questionStep7"
+          >
+
+            <div class="question-block">
+
+              <div class="section-eyebrow">
+                Tier 1 · F · Adult participant section
+              </div>
+
+              <label class="question-label">
+                Alcohol consumption
+              </label>
+
+              <div class="question-help">
+                This section is intended for adult screening
+                participants. If the participant never drinks
+                alcohol, select that option and the section will
+                contribute 0 points.
+              </div>
+
+              <div class="option-grid two">
+
+                <button
+                  class="option-button"
+                  id="alcoholNever"
+                  type="button"
+                  onclick="selectAlcoholNever()"
+                >
+                  <span class="option-title">
+                    I never drink alcohol
+                  </span>
+
+                  <span class="option-description">
+                    Skip the remaining alcohol questions · 0 points
+                  </span>
+                </button>
+
+
+                <button
+                  class="option-button"
+                  id="alcoholDrinker"
+                  type="button"
+                  onclick="selectAlcoholDrinker()"
+                >
+                  <span class="option-title">
+                    I drink alcohol
+                  </span>
+
+                  <span class="option-description">
+                    Continue to the proposed alcohol questions.
+                  </span>
+                </button>
+
+              </div>
+
+
+              <div
+                id="alcoholDetails"
+                style="display:none;"
+              >
+
+                <div class="subsection">
+
+                  <div class="subsection-title">
+                    1. Frequency
+                  </div>
+
+                  <div class="question-help">
+                    How often does the participant drink alcohol?
+                  </div>
+
+                  <div class="option-grid">
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholFrequency"
+                      data-value="never"
+                      data-score="0"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">Never</span>
+                      <span class="option-description">0 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholFrequency"
+                      data-value="monthly"
+                      data-score="1"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">
+                        Once a month or less
+                      </span>
+                      <span class="option-description">1 point</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholFrequency"
+                      data-value="twoFour"
+                      data-score="2"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">
+                        2–4 times a month
+                      </span>
+                      <span class="option-description">2 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholFrequency"
+                      data-value="twoThreeWeek"
+                      data-score="3"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">
+                        2–3 times a week
+                      </span>
+                      <span class="option-description">3 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholFrequency"
+                      data-value="fourPlus"
+                      data-score="4"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">
+                        4+ times a week
+                      </span>
+                      <span class="option-description">4 points</span>
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <div class="subsection">
+
+                  <div class="subsection-title">
+                    2. Quantity on a drinking day
+                  </div>
+
+                  <div class="question-help">
+                    Select the closest number of standard drinks
+                    usually consumed on a drinking day.
+                  </div>
+
+                  <div class="option-grid">
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholQuantity"
+                      data-value="oneTwo"
+                      data-score="0"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">1–2 standard drinks</span>
+                      <span class="option-description">0 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholQuantity"
+                      data-value="threeFour"
+                      data-score="1.5"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">3–4 standard drinks</span>
+                      <span class="option-description">1.5 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholQuantity"
+                      data-value="six"
+                      data-score="2"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">6 standard drinks</span>
+                      <span class="option-description">2 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholQuantity"
+                      data-value="sevenNine"
+                      data-score="3"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">7–9 standard drinks</span>
+                      <span class="option-description">3 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholQuantity"
+                      data-value="tenPlus"
+                      data-score="4"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">10+ standard drinks</span>
+                      <span class="option-description">4 points</span>
+                    </button>
+
+                  </div>
+
+                  <div class="tier2-warning">
+                    The supplied protocol does not specify a separate
+                    scoring row for exactly 5 standard drinks. This
+                    prototype therefore does not silently invent one.
+                    The scoring specification should be confirmed with
+                    the project supervisor before field deployment.
+                  </div>
+
+                </div>
+
+
+                <div class="subsection">
+
+                  <div class="subsection-title">
+                    3. Five or more drinks on one occasion
+                  </div>
+
+                  <div class="question-help">
+                    How often does the participant have five or more
+                    standard drinks on a single occasion, such as at
+                    a festival, marriage, party or weekend?
+                  </div>
+
+                  <div class="option-grid">
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholBinge"
+                      data-value="never"
+                      data-score="0"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">Never</span>
+                      <span class="option-description">0 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholBinge"
+                      data-value="lessMonthly"
+                      data-score="1"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">Less than monthly</span>
+                      <span class="option-description">1 point</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholBinge"
+                      data-value="monthly"
+                      data-score="2"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">Monthly</span>
+                      <span class="option-description">2 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholBinge"
+                      data-value="weekly"
+                      data-score="3"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">Weekly</span>
+                      <span class="option-description">3 points</span>
+                    </button>
+
+                    <button
+                      class="option-button"
+                      data-group="alcoholBinge"
+                      data-value="daily"
+                      data-score="4"
+                      type="button"
+                      onclick="selectOption(this)"
+                    >
+                      <span class="option-title">
+                        Daily / almost daily
+                      </span>
+                      <span class="option-description">4 points</span>
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="info-box">
+                <strong>Proposed alcohol scoring:</strong><br /><br />
+                Total 0–3 → +0<br />
+                Total 4–7 → +10<br />
+                Total 8–12 → +20
+              </div>
+
+            </div>
+
+          </div>
