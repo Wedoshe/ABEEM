@@ -2057,10 +2057,29 @@
             </div>
 
           </div>
+<!-- STEP 6: Medication -->
+<div class="questionnaire-step" id="qStep6">
+  <div class="section-eyebrow">Section 6 · Medication</div>
+  <label class="question-label">Are you currently taking any medication?</label>
+  <p class="question-help">Some medicines may affect blood-glucose measurements or how screening results are interpreted.</p>
+
+  <div class="option-grid two">
+    <button class="option-button" type="button" onclick="selectOption('medication', 'no', 0)">
+      <span class="option-title">No</span>
+      <span class="option-description">Not currently taking any medication.</span>
+    </button>
+
+    <button class="option-button" type="button" onclick="selectOption('medication', 'yes', 0)">
+      <span class="option-title">Yes</span>
+      <span class="option-description">Currently taking one or more medicines.</span>
+    </button>
+  </div>
+</div>
+          
 
 
           <!-- =================================================
-               STEP 6 — STRESS
+               STEP 7 — STRESS
           ================================================== -->
 
           <div
