@@ -1510,7 +1510,6 @@
               <div class="book-number">
                 04 · BUILD
               </div>
-
             </div>
 
 
@@ -1526,30 +1525,34 @@
               </h2>
 
               <p>
-                The final screen explains the screening-risk category
-                and suggests an appropriate next step.
+                Understand your score and decide on your next steps for health and wellness.
               </p>
 
-              <div class="info-box">
-                <strong>Low</strong><br />
-                Stay aware and maintain healthy habits.
-                <br /><br />
+              <ul class="book-feature-list">
 
-                <strong>Moderate</strong><br />
-                Pay closer attention to modifiable risk factors
-                and consider follow-up.
-                <br /><br />
+                <li>
+                  <span>✓</span>
+                  <span>Review personalized guidance.</span>
+                </li>
 
-                <strong>High</strong><br />
-                Seek appropriate medical evaluation.
-              </div>
+                <li>
+                  <span>✓</span>
+                  <span>Learn about local support resources.</span>
+                </li>
+
+                <li>
+                  <span>✓</span>
+                  <span>Take action early.</span>
+                </li>
+
+              </ul>
 
               <button
                 class="book-start-button"
                 type="button"
-                onclick="beginScreening()"
+                onclick="startQuestionnaire()"
               >
-                Begin ABEEM screening
+                Start Screening
                 <span>→</span>
               </button>
 
@@ -1568,9 +1571,10 @@
 
           <button
             class="secondary-button"
-            id="bookPrevious"
+            id="prevSpread"
             type="button"
-            onclick="previousBookSpread()"
+            onclick="previousSpread()"
+            style="visibility: hidden;"
           >
             ← Previous
           </button>
@@ -1581,9 +1585,9 @@
 
           <button
             class="primary-button book-next"
-            id="bookNext"
+            id="nextSpread"
             type="button"
-            onclick="nextBookSpread()"
+            onclick="nextSpread()"
           >
             Next →
           </button>
@@ -1591,11 +1595,12 @@
         </div>
 
       </div>
+
     </section>
 
 
     <!-- =====================================================
-         SCREEN 04 — QUESTIONNAIRE
+         QUESTIONNAIRE SCREENS
     ====================================================== -->
 
     <section class="screen questionnaire-screen" id="screen04">
@@ -1604,149 +1609,532 @@
 
         <div class="questionnaire-top">
 
-          <div class="brand">
-            ABEEM
+          <div class="progress-label" id="questionProgressLabel">
+            Question 1 of 9
           </div>
 
-          <div
-            class="progress-label"
-            id="questionProgressLabel"
+          <button
+            class="secondary-button"
+            type="button"
+            onclick="previousQuestion()"
+            id="prevQuestionBtn"
+            style="visibility: hidden;"
           >
-            Step 1 of 10
-          </div>
+            Back
+          </button>
 
         </div>
 
+
         <div class="progress-track">
+
           <div
             class="progress-fill"
-            id="questionProgress"
+            id="progressFill"
           ></div>
+
         </div>
 
 
         <div class="questionnaire-card">
 
-          <!-- =================================================
-               STEP 1 — AGE
-          ================================================== -->
+
+          <!-- STEP 1: Age -->
 
           <div
             class="questionnaire-step active"
-            id="questionStep1"
+            id="qStep1"
           >
 
-            <div class="question-block">
+            <div class="section-eyebrow">
+              Section 1 · Demographics
+            </div>
 
-              <div class="section-eyebrow">
-                Tier 1 · A
-              </div>
+            <label
+              class="question-label"
+              for="ageInput"
+            >
+              What is your age?
+            </label>
 
-              <label
-                class="question-label"
-                for="ageInput"
-              >
-                How old is the participant?
-              </label>
+            <p class="question-help">
+              Age is an important factor in diabetes risk assessment as risk naturally increases over time.
+            </p>
 
-              <div class="question-help">
-                Enter age in completed years. This follows the
-                proposed ABEEM age scoring bands.
-              </div>
+            <div class="input-group">
 
               <input
-                class="text-input"
-                id="ageInput"
                 type="number"
+                id="ageInput"
+                class="text-input"
+                placeholder="Enter age (e.g., 45)"
                 min="18"
                 max="120"
-                step="1"
-                inputmode="numeric"
-                autocomplete="off"
-                placeholder="Enter age"
-                oninput="handleAgeInput()"
-                onkeydown="restrictAgeKeys(event)"
+                oninput="validateAge()"
               />
 
               <div
                 class="validation-message"
-                id="ageValidation"
+                id="ageError"
               >
                 Please enter a valid age between 18 and 120.
               </div>
 
-              <div class="info-box">
-                <strong>Proposed scoring:</strong><br /><br />
-                Under 35 → 0 points<br />
-                35–49 → 20 points<br />
-                50+ → 30 points
+            </div>
+
+          </div>
+
+
+          <!-- STEP 2: Waist Circumference -->
+
+          <div
+            class="questionnaire-step"
+            id="qStep2"
+          >
+
+            <div class="section-eyebrow">
+              Section 2 · Measurements
+            </div>
+
+            <label
+              class="question-label"
+              for="waistInput"
+            >
+              What is your waist measurement?
+            </label>
+
+            <p class="question-help">
+              Measure around your abdomen near the level of your navel while standing relaxed.
+            </p>
+
+            <div class="input-row">
+
+              <div class="input-group">
+
+                <label
+                  class="input-label"
+                  for="waistInput"
+                >
+                  Waist size
+                </label>
+
+                <input
+                  type="number"
+                  id="waistInput"
+                  class="text-input"
+                  placeholder="e.g., 85"
+                  step="0.5"
+                  oninput="validateMeasurements()"
+                />
+
               </div>
+
+
+              <div class="input-group">
+
+                <label
+                  class="input-label"
+                  for="waistUnit"
+                >
+                  Unit
+                </label>
+
+                <select
+                  id="waistUnit"
+                  class="text-input"
+                  onchange="validateMeasurements()"
+                >
+                  <option value="cm">
+                    Centimeters (cm)
+                  </option>
+
+                  <option value="in">
+                    Inches (in)
+                  </option>
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="validation-message"
+              id="measurementError"
+            >
+              Please enter a valid measurement.
+            </div>
+
+          </div>
+
+
+          <!-- STEP 3: Physical Activity -->
+
+          <div
+            class="questionnaire-step"
+            id="qStep3"
+          >
+
+            <div class="section-eyebrow">
+              Section 3 · Lifestyle
+            </div>
+
+            <label class="question-label">
+              Do you routinely engage in physical activity?
+            </label>
+
+            <p class="question-help">
+              At least 30 minutes of moderate exercise (like brisk walking, cycling, or active work) daily or regularly.
+            </p>
+
+
+            <div class="option-grid two">
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('activity', 'yes', 0)"
+              >
+
+                <span class="option-title">
+                  Yes
+                </span>
+
+                <span class="option-description">
+                  Regular physical activity incorporated into routine.
+                </span>
+
+              </button>
+
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('activity', 'no', 2)"
+              >
+
+                <span class="option-title">
+                  No
+                </span>
+
+                <span class="option-description">
+                  Little to no regular exercise or mostly sedentary.
+                </span>
+
+              </button>
 
             </div>
 
           </div>
 
 
-          <!-- =================================================
-               STEP 2 — SEX
-          ================================================== -->
+          <!-- STEP 4: Family History -->
 
           <div
             class="questionnaire-step"
-            id="questionStep2"
+            id="qStep4"
           >
 
-            <div class="question-block">
+            <div class="section-eyebrow">
+              Section 4 · Medical History
+            </div>
 
-              <div class="section-eyebrow">
-                Tier 1 · Measurement standardisation
+            <label class="question-label">
+              Is there a history of diabetes in your family?
+            </label>
+
+            <p class="question-help">
+              Check if parents, siblings, or children have been diagnosed with diabetes.
+            </p>
+
+
+            <div class="option-grid two">
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('family', 'none', 0)"
+              >
+
+                <span class="option-title">
+                  No Family History
+                </span>
+
+                <span class="option-description">
+                  No immediate family members with diabetes.
+                </span>
+
+              </button>
+
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('family', 'yes', 3)"
+              >
+
+                <span class="option-title">
+                  Yes, Family History
+                </span>
+
+                <span class="option-description">
+                  Parent, sibling, or child diagnosed with diabetes.
+                </span>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- STEP 5: Blood Pressure Medication -->
+
+          <div
+            class="questionnaire-step"
+            id="qStep5"
+          >
+
+            <div class="section-eyebrow">
+              Section 5 · Clinical Factors
+            </div>
+
+            <label class="question-label">
+              Have you ever been diagnosed with high blood pressure?
+            </label>
+
+            <p class="question-help">
+              Or currently taking prescribed medication for hypertension.
+            </p>
+
+
+            <div class="option-grid two">
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('bp', 'no', 0)"
+              >
+
+                <span class="option-title">
+                  No
+                </span>
+
+                <span class="option-description">
+                  Normal blood pressure history.
+                </span>
+
+              </button>
+
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('bp', 'yes', 2)"
+              >
+
+                <span class="option-title">
+                  Yes
+                </span>
+
+                <span class="option-description">
+                  Diagnosed or taking medication for high blood pressure.
+                </span>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- STEP 6: Medication -->
+
+          <div
+            class="questionnaire-step"
+            id="qStep6"
+          >
+
+            <div class="section-eyebrow">
+              Section 6 · Medication
+            </div>
+
+            <label class="question-label">
+              Are you currently taking any medication?
+            </label>
+
+            <p class="question-help">
+              Some medicines can affect blood-glucose measurements or the interpretation of diabetes risk.
+            </p>
+
+
+            <div class="option-grid two">
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('medication', 'yes', 0)"
+              >
+
+                <span class="option-title">
+                  Yes
+                </span>
+
+                <span class="option-description">
+                  Currently taking medication.
+                </span>
+
+              </button>
+
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('medication', 'no', 0)"
+              >
+
+                <span class="option-title">
+                  No
+                </span>
+
+                <span class="option-description">
+                  Not currently taking medication.
+                </span>
+
+              </button>
+
+            </div>
+
+
+            <div class="info-box">
+
+              <strong>
+                Non-scoring question:
+              </strong>
+
+              Some medications can affect blood-glucose measurements or risk interpretation.
+              This question is recorded for screening context only and does not affect the ABEEM score.
+
+            </div>
+
+          </div>
+
+
+          <!-- STEP 7: Sleep Medication -->
+
+          <div
+            class="questionnaire-step"
+            id="qStep7"
+          >
+
+            <div class="section-eyebrow">
+              Section 7 · Sleep
+            </div>
+
+            <label class="question-label">
+              Are you currently taking any medication for sleep or any medication that may affect your sleep?
+            </label>
+
+            <p class="question-help">
+              This helps determine whether the sleep-disturbance question should be included in the screening flow.
+            </p>
+
+
+            <div class="option-grid two">
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectSleepMedication('yes', this)"
+              >
+
+                <span class="option-title">
+                  Yes
+                </span>
+
+                <span class="option-description">
+                  Taking medication for sleep or medication that may affect sleep.
+                  The sleep-disturbance question will be skipped.
+                </span>
+
+              </button>
+
+
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectSleepMedication('no', this)"
+              >
+
+                <span class="option-title">
+                  No
+                </span>
+
+                <span class="option-description">
+                  Not taking medication that affects sleep.
+                  Continue to the sleep-disturbance question.
+                </span>
+
+              </button>
+
+            </div>
+
+
+            <!-- CONDITIONAL SLEEP-DISTURBANCE QUESTION -->
+
+            <div
+              id="sleepDisturbanceSection"
+              class="subsection"
+              style="display: none;"
+            >
+
+              <div class="subsection-title">
+                Sleep disturbance
               </div>
 
-              <label class="question-label">
-                What is the participant's sex for this protocol?
-              </label>
+              <p class="question-help">
+                During the past few weeks, have you experienced disturbed sleep,
+                such as difficulty falling asleep, waking frequently, or not feeling rested?
+              </p>
 
-              <div class="question-help">
-                ABEEM's proposed waist-to-hip ratio threshold is
-                sex-specific, so this is required to calculate the
-                proposed WHR component.
-              </div>
 
               <div class="option-grid two">
 
                 <button
                   class="option-button"
                   type="button"
-                  data-group="sex"
-                  data-value="male"
-                  onclick="selectOption(this)"
+                  data-group="sleepDisturbance"
+                  onclick="selectOption('sleepDisturbance', 'yes', 0)"
                 >
-                  <span class="option-title">Male</span>
-                  <span class="option-description">
-                    Uses the proposed male WHR threshold.
+
+                  <span class="option-title">
+                    Yes
                   </span>
+
+                  <span class="option-description">
+                    Sleep has been disturbed recently.
+                  </span>
+
                 </button>
+
 
                 <button
                   class="option-button"
                   type="button"
-                  data-group="sex"
-                  data-value="female"
-                  onclick="selectOption(this)"
+                  data-group="sleepDisturbance"
+                  onclick="selectOption('sleepDisturbance', 'no', 0)"
                 >
-                  <span class="option-title">Female</span>
-                  <span class="option-description">
-                    Uses the proposed female WHR threshold.
+
+                  <span class="option-title">
+                    No
                   </span>
+
+                  <span class="option-description">
+                    No significant sleep disturbance.
+                  </span>
+
                 </button>
 
-              </div>
-
-              <div class="info-box">
-                <strong>Protocol note:</strong>
-                The WHR thresholds used here are part of the
-                proposed ABEEM modification and should not be
-                presented as the original IDRS scoring system.
               </div>
 
             </div>
@@ -1754,4210 +2142,1458 @@
           </div>
 
 
-          <!-- =================================================
-               STEP 3 — FAMILY HISTORY
-          ================================================== -->
+          <!-- STEP 8: Blood Sugar History -->
 
           <div
             class="questionnaire-step"
-            id="questionStep3"
+            id="qStep8"
           >
 
-            <div class="question-block">
+            <div class="section-eyebrow">
+              Section 8 · Clinical History
+            </div>
 
-              <div class="section-eyebrow">
-                Tier 1 · B
-              </div>
+            <label class="question-label">
+              Have you ever found high blood sugar in the past?
+            </label>
 
-              <label class="question-label">
-                Does either parent have diabetes?
-              </label>
-
-              <div class="question-help">
-                Select the option that best represents the
-                participant's family history.
-              </div>
-
-              <div class="option-grid">
-
-                <button
-                  class="option-button"
-                  data-group="family"
-                  data-value="neither"
-                  data-score="0"
-                  type="button"
-                  onclick="selectOption(this)"
-                >
-                  <span class="option-title">
-                    Neither parent
-                  </span>
-
-                  <span class="option-description">
-                    No known diabetes in either parent · 0 points
-                  </span>
-                </button>
+            <p class="question-help">
+              During illness, pregnancy, routine checkups, or previous screening.
+            </p>
 
 
-                <button
-                  class="option-button"
-                  data-group="family"
-                  data-value="one"
-                  data-score="10"
-                  type="button"
-                  onclick="selectOption(this)"
-                >
-                  <span class="option-title">
-                    One parent
-                  </span>
+            <div class="option-grid two">
 
-                  <span class="option-description">
-                    One parent has diabetes · 10 points
-                  </span>
-                </button>
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('sugar', 'no', 0)"
+              >
+
+                <span class="option-title">
+                  No
+                </span>
+
+                <span class="option-description">
+                  No prior high blood sugar readings noted.
+                </span>
+
+              </button>
 
 
-                <button
-                  class="option-button"
-                  data-group="family"
-                  data-value="both"
-                  data-score="20"
-                  type="button"
-                  onclick="selectOption(this)"
-                >
-                  <span class="option-title">
-                    Both parents
-                  </span>
+              <button
+                class="option-button"
+                type="button"
+                onclick="selectOption('sugar', 'yes', 5)"
+              >
 
-                  <span class="option-description">
-                    Both parents have diabetes · 20 points
-                  </span>
-                </button>
+                <span class="option-title">
+                  Yes
+                </span>
 
-              </div>
+                <span class="option-description">
+                  Elevated blood sugar noted previously.
+                </span>
+
+              </button>
 
             </div>
 
           </div>
 
 
-          <!-- =================================================
-               STEP 4 — ACTIVITY
-          ================================================== -->
+          <!-- STEP 9: Review & Submit -->
 
           <div
             class="questionnaire-step"
-            id="questionStep4"
+            id="qStep9"
           >
 
-            <div class="question-block">
+            <div class="section-eyebrow">
+              Section 9 · Final Step
+            </div>
 
-              <div class="section-eyebrow">
-                Tier 1 · D
-              </div>
+            <label class="question-label">
+              Ready to evaluate your screening score?
+            </label>
 
-              <label class="question-label">
-                Which best describes physical activity?
-              </label>
-
-              <div class="question-help">
-                Choose the description that most closely matches
-                the participant's usual activity pattern.
-              </div>
-
-              <div class="option-grid">
-
-                <button
-                  class="option-button"
-                  data-group="activity"
-                  data-value="vigorous"
-                  data-score="0"
-                  type="button"
-                  onclick="selectOption(this)"
-                >
-                  <span class="option-title">
-                    Vigorous / strenuous
-                  </span>
-
-                  <span class="option-description">
-                    Agriculture, manual labour, heavy lifting
-                    or regular vigorous exercise · 0 points
-                  </span>
-                </button>
+            <p class="question-help">
+              Click continue to generate your personalized risk assessment summary and recommendations.
+            </p>
 
 
-                <button
-                  class="option-button"
-                  data-group="activity"
-                  data-value="moderate"
-                  data-score="10"
-                  type="button"
-                  onclick="selectOption(this)"
-                >
-                  <span class="option-title">
-                    Moderate / active routine
-                  </span>
+            <div class="info-box">
 
-                  <span class="option-description">
-                    Brisk walking, active household chores
-                    or similar activity · 10 points
-                  </span>
-                </button>
+              <strong>
+                Data Privacy Notice:
+              </strong>
 
-
-                <button
-                  class="option-button"
-                  data-group="activity"
-                  data-value="sedentary"
-                  data-score="20"
-                  type="button"
-                  onclick="selectOption(this)"
-                >
-                  <span class="option-title">
-                    Sedentary
-                  </span>
-
-                  <span class="option-description">
-                    Desk work, sitting most of the time and
-                    no regular exercise · 20 points
-                  </span>
-                </button>
-
-              </div>
+              All calculations are performed entirely within your active browser session and are not stored externally.
 
             </div>
 
           </div>
 
 
-          <!-- =================================================
-               STEP 5 — WAIST / HIP
-          ================================================== -->
-
-          <div
-            class="questionnaire-step"
-            id="questionStep5"
-          >
-
-            <div class="question-block">
-
-              <div class="section-eyebrow">
-                Tier 1 · C
-              </div>
-
-              <label class="question-label">
-                Measure waist and hip circumference
-              </label>
-
-              <div class="question-help">
-                For the proposed ABEEM protocol, measure waist
-                circumference at the level of the navel and hip
-                circumference at the widest part of the buttocks.
-                The app will calculate the waist-to-hip ratio.
-              </div>
-
-              <div class="input-row">
-
-                <div class="input-group">
-
-                  <label
-                    class="input-label"
-                    for="waistInput"
-                  >
-                    Waist circumference · cm
-                  </label>
-
-                  <input
-                    class="text-input"
-                    id="waistInput"
-                    type="number"
-                    min="40"
-                    max="200"
-                    step="0.1"
-                    inputmode="decimal"
-                    placeholder="e.g. 88.5"
-                    oninput="handleMeasurementInput()"
-                  />
-
-                  <div
-                    class="validation-message"
-                    id="waistValidation"
-                  >
-                    Enter a waist measurement between 40 and 200 cm.
-                  </div>
-
-                </div>
-
-
-                <div class="input-group">
-
-                  <label
-                    class="input-label"
-                    for="hipInput"
-                  >
-                    Hip circumference · cm
-                  </label>
-
-                  <input
-                    class="text-input"
-                    id="hipInput"
-                    type="number"
-                    min="40"
-                    max="200"
-                    step="0.1"
-                    inputmode="decimal"
-                    placeholder="e.g. 96"
-                    oninput="handleMeasurementInput()"
-                  />
-
-                  <div
-                    class="validation-message"
-                    id="hipValidation"
-                  >
-                    Enter a hip measurement between 40 and 200 cm.
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div
-                class="result-card"
-                style="margin-top:24px; box-shadow:none;"
-              >
-
-                <div class="section-eyebrow">
-                  Calculated WHR
-                </div>
-
-                <div
-                  class="result-score"
-                  id="whrPreview"
-                  style="font-size:50px;"
-                >
-                  —
-                </div>
-
-                <div
-                  class="result-category"
-                  id="whrCategory"
-                >
-                  Enter both measurements
-                </div>
-
-              </div>
-
-              <div class="info-box">
-                <strong>Proposed ABEEM WHR scoring:</strong><br /><br />
-                Male: WHR &lt; 0.96 → 0 points;
-                WHR ≥ 0.96 → 20 points.<br /><br />
-                Female: WHR &lt; 0.88 → 0 points;
-                WHR ≥ 0.88 → 20 points.
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               STEP 6 — STRESS
-          ================================================== -->
-
-          <div
-            class="questionnaire-step"
-            id="questionStep6"
-          >
-
-            <div class="question-block">
-
-              <div class="section-eyebrow">
-                Tier 1 · E · Stress
-              </div>
-
-              <label class="question-label">
-                Think about the last 30 days.
-              </label>
-
-              <div class="question-help">
-                Answer each question based on how often the
-                participant experienced the situation.
-              </div>
-
-
-              <div class="subsection">
-
-                <div class="subsection-title">
-                  1. Sleep disturbance
-                </div>
-
-                <div class="question-help">
-                  In the past month, how often have you had
-                  difficulty falling asleep or experienced broken
-                  sleep because of worries or tension?
-                </div>
-
-                <div class="option-grid three">
-
-                  <button
-                    class="option-button"
-                    data-group="stressSleep"
-                    data-value="never"
-                    data-score="0"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Never / rarely</span>
-                    <span class="option-description">0 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressSleep"
-                    data-value="sometimes"
-                    data-score="2"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Sometimes</span>
-                    <span class="option-description">2 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressSleep"
-                    data-value="often"
-                    data-score="4"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Often / always</span>
-                    <span class="option-description">4 points</span>
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <div class="subsection">
-
-                <div class="subsection-title">
-                  2. Physical tension
-                </div>
-
-                <div class="question-help">
-                  In the past month, how often have you felt
-                  unexplained body aches, heavy headaches, or
-                  constant exhaustion because of stress?
-                </div>
-
-                <div class="option-grid three">
-
-                  <button
-                    class="option-button"
-                    data-group="stressPhysical"
-                    data-value="never"
-                    data-score="0"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Never / rarely</span>
-                    <span class="option-description">0 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressPhysical"
-                    data-value="sometimes"
-                    data-score="2"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Sometimes</span>
-                    <span class="option-description">2 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressPhysical"
-                    data-value="often"
-                    data-score="4"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Often / always</span>
-                    <span class="option-description">4 points</span>
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <div class="subsection">
-
-                <div class="subsection-title">
-                  3. Financial / livelihood anxiety
-                </div>
-
-                <div class="question-help">
-                  In the past month, how often have you felt
-                  constantly overwhelmed or deeply anxious about
-                  household expenses, farming, job security, or
-                  family responsibility?
-                </div>
-
-                <div class="option-grid three">
-
-                  <button
-                    class="option-button"
-                    data-group="stressFinancial"
-                    data-value="never"
-                    data-score="0"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Never / rarely</span>
-                    <span class="option-description">0 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressFinancial"
-                    data-value="sometimes"
-                    data-score="2"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Sometimes</span>
-                    <span class="option-description">2 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressFinancial"
-                    data-value="often"
-                    data-score="4"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Often / always</span>
-                    <span class="option-description">4 points</span>
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <div class="subsection">
-
-                <div class="subsection-title">
-                  4. Inability to relax
-                </div>
-
-                <div class="question-help">
-                  In the past month, how often have you found it
-                  difficult to sit peacefully, clear your mind, or
-                  feel calm even when your daily work is finished?
-                </div>
-
-                <div class="option-grid three">
-
-                  <button
-                    class="option-button"
-                    data-group="stressRelax"
-                    data-value="never"
-                    data-score="0"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Never / rarely</span>
-                    <span class="option-description">0 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressRelax"
-                    data-value="sometimes"
-                    data-score="2"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Sometimes</span>
-                    <span class="option-description">2 points</span>
-                  </button>
-
-                  <button
-                    class="option-button"
-                    data-group="stressRelax"
-                    data-value="often"
-                    data-score="4"
-                    type="button"
-                    onclick="selectOption(this)"
-                  >
-                    <span class="option-title">Often / always</span>
-                    <span class="option-description">4 points</span>
-                  </button>
-
-                </div>
-
-              </div>
-
-
-              <div class="info-box">
-                <strong>Proposed stress scoring:</strong><br /><br />
-                0–4 → Low stress → +0<br />
-                5–9 → Moderate stress → +10<br />
-                10–16 → High stress → +20
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               STEP 7 — ALCOHOL
-          ================================================== -->
-
-          <div
-            class="questionnaire-step"
-            id="questionStep7"
-          >
-
-            <div class="question-block">
-
-              <div class="section-eyebrow">
-                Tier 1 · F · Adult participant section
-              </div>
-
-              <label class="question-label">
-                Alcohol consumption
-              </label>
-
-              <div class="question-help">
-                This section is intended for adult screening
-                participants. If the participant never drinks
-                alcohol, select that option and the section will
-                contribute 0 points.
-              </div>
-
-              <div class="option-grid two">
-
-                <button
-                  class="option-button"
-                  id="alcoholNever"
-                  type="button"
-                  onclick="selectAlcoholNever()"
-                >
-                  <span class="option-title">
-                    I never drink alcohol
-                  </span>
-
-                  <span class="option-description">
-                    Skip the remaining alcohol questions · 0 points
-                  </span>
-                </button>
-
-
-                <button
-                  class="option-button"
-                  id="alcoholDrinker"
-                  type="button"
-                  onclick="selectAlcoholDrinker()"
-                >
-                  <span class="option-title">
-                    I drink alcohol
-                  </span>
-
-                  <span class="option-description">
-                    Continue to the proposed alcohol questions.
-                  </span>
-                </button>
-
-              </div>
-
-
-              <div
-                id="alcoholDetails"
-                style="display:none;"
-              >
-
-                <div class="subsection">
-
-                  <div class="subsection-title">
-                    1. Frequency
-                  </div>
-
-                  <div class="question-help">
-                    How often does the participant drink alcohol?
-                  </div>
-
-                  <div class="option-grid">
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholFrequency"
-                      data-value="never"
-                      data-score="0"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">Never</span>
-                      <span class="option-description">0 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholFrequency"
-                      data-value="monthly"
-                      data-score="1"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">
-                        Once a month or less
-                      </span>
-                      <span class="option-description">1 point</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholFrequency"
-                      data-value="twoFour"
-                      data-score="2"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">
-                        2–4 times a month
-                      </span>
-                      <span class="option-description">2 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholFrequency"
-                      data-value="twoThreeWeek"
-                      data-score="3"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">
-                        2–3 times a week
-                      </span>
-                      <span class="option-description">3 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholFrequency"
-                      data-value="fourPlus"
-                      data-score="4"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">
-                        4+ times a week
-                      </span>
-                      <span class="option-description">4 points</span>
-                    </button>
-
-                  </div>
-
-                </div>
-
-
-                <div class="subsection">
-
-                  <div class="subsection-title">
-                    2. Quantity on a drinking day
-                  </div>
-
-                  <div class="question-help">
-                    Select the closest number of standard drinks
-                    usually consumed on a drinking day.
-                  </div>
-
-                  <div class="option-grid">
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholQuantity"
-                      data-value="oneTwo"
-                      data-score="0"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">1–2 standard drinks</span>
-                      <span class="option-description">0 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholQuantity"
-                      data-value="threeFour"
-                      data-score="1.5"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">3–4 standard drinks</span>
-                      <span class="option-description">1.5 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholQuantity"
-                      data-value="six"
-                      data-score="2"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">6 standard drinks</span>
-                      <span class="option-description">2 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholQuantity"
-                      data-value="sevenNine"
-                      data-score="3"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">7–9 standard drinks</span>
-                      <span class="option-description">3 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholQuantity"
-                      data-value="tenPlus"
-                      data-score="4"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">10+ standard drinks</span>
-                      <span class="option-description">4 points</span>
-                    </button>
-
-                  </div>
-
-                  <div class="tier2-warning">
-                    The supplied protocol does not specify a separate
-                    scoring row for exactly 5 standard drinks. This
-                    prototype therefore does not silently invent one.
-                    The scoring specification should be confirmed with
-                    the project supervisor before field deployment.
-                  </div>
-
-                </div>
-
-
-                <div class="subsection">
-
-                  <div class="subsection-title">
-                    3. Five or more drinks on one occasion
-                  </div>
-
-                  <div class="question-help">
-                    How often does the participant have five or more
-                    standard drinks on a single occasion, such as at
-                    a festival, marriage, party or weekend?
-                  </div>
-
-                  <div class="option-grid">
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholBinge"
-                      data-value="never"
-                      data-score="0"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">Never</span>
-                      <span class="option-description">0 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholBinge"
-                      data-value="lessMonthly"
-                      data-score="1"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">Less than monthly</span>
-                      <span class="option-description">1 point</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholBinge"
-                      data-value="monthly"
-                      data-score="2"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">Monthly</span>
-                      <span class="option-description">2 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholBinge"
-                      data-value="weekly"
-                      data-score="3"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">Weekly</span>
-                      <span class="option-description">3 points</span>
-                    </button>
-
-                    <button
-                      class="option-button"
-                      data-group="alcoholBinge"
-                      data-value="daily"
-                      data-score="4"
-                      type="button"
-                      onclick="selectOption(this)"
-                    >
-                      <span class="option-title">
-                        Daily / almost daily
-                      </span>
-                      <span class="option-description">4 points</span>
-                    </button>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              <div class="info-box">
-                <strong>Proposed alcohol scoring:</strong><br /><br />
-                Total 0–3 → +0<br />
-                Total 4–7 → +10<br />
-                Total 8–12 → +20
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               STEP 8 — TIER 1 RESULT
-          ================================================== -->
-
-          <div
-            class="questionnaire-step"
-            id="questionStep8"
-          >
-
-            <div class="question-block">
-
-              <div class="section-eyebrow">
-                Tier 1 complete
-              </div>
-
-              <label class="question-label">
-                Your initial ABEEM risk picture
-              </label>
-
-              <div class="question-help">
-                ABEEM has combined the questionnaire responses
-                into the proposed Tier 1 screening-risk score.
-              </div>
-
-              <div
-                class="result-card"
-                id="tier1ResultCard"
-                style="box-shadow:none;"
-              >
-
-                <div class="section-eyebrow">
-                  Tier 1 score
-                </div>
-
-                <div
-                  class="result-score"
-                  id="tier1Score"
-                >
-                  —
-                </div>
-
-                <div
-                  class="result-category"
-                  id="tier1Category"
-                >
-                  Calculating
-                </div>
-
-                <p
-                  class="result-text"
-                  id="tier1Text"
-                >
-                  Your score is being calculated.
-                </p>
-
-                <div
-                  class="score-breakdown"
-                  id="tier1Breakdown"
-                ></div>
-
-              </div>
-
-
-              <div class="info-box">
-
-                <strong>Important:</strong>
-                The Tier 1 score shown here follows the proposed
-                ABEEM scoring values supplied for this prototype.
-                It is a screening-risk calculation and does not
-                diagnose diabetes.
-
-                <br /><br />
-
-                <strong>Protocol note:</strong>
-                The supplied component maxima add up to
-                <strong>130 points</strong> when all proposed
-                components are included, although the protocol
-                document describes Tier 1 as 0–110.
-
-                This prototype therefore calculates the component
-                values directly rather than silently inventing
-                a correction.
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               STEP 9 — TIER 2
-          ================================================== -->
-
-          <div
-            class="questionnaire-step"
-            id="questionStep9"
-          >
-
-            <div class="question-block">
-
-              <div class="section-eyebrow">
-                Tier 2 · Point-of-care measurements
-              </div>
-
-              <label class="question-label">
-                Clinical measurements
-              </label>
-
-              <div class="question-help">
-                If the Tier 1 score reaches the proposed Tier 2
-                trigger, ABEEM can incorporate available clinical
-                measurements taken using portable screening devices.
-              </div>
-
-
-              <div
-                class="result-card"
-                id="tier2TriggerCard"
-                style="box-shadow:none; margin-bottom:25px;"
-              >
-
-                <div class="section-eyebrow">
-                  Proposed Tier 2 trigger
-                </div>
-
-                <div
-                  class="result-category"
-                  id="tier2TriggerText"
-                >
-                  Checking Tier 1 score…
-                </div>
-
-                <p
-                  class="result-text"
-                  id="tier2TriggerDescription"
-                ></p>
-
-              </div>
-
-
-              <div
-                id="tier2MeasurementQuestion"
-                style="display:none;"
-              >
-
-                <div class="subsection-title">
-                  Are clinical measurements already available?
-                </div>
-
-                <div class="question-help">
-                  ABEEM does not require a participant to invent or
-                  estimate a measurement they do not have.
-                  Select what is actually available from a recent
-                  screening or point-of-care test.
-                </div>
-
-
-                <div class="measurement-status">
-
-                  <button
-                    class="measurement-choice"
-                    id="measurementNo"
-                    type="button"
-                    onclick="selectMeasurementAvailability('none')"
-                  >
-                    <h4>
-                      No measurements available
-                    </h4>
-
-                    <p>
-                      Skip Tier 2 measurements and continue to
-                      the final screening-risk assessment.
-                    </p>
-                  </button>
-
-
-                  <button
-                    class="measurement-choice"
-                    id="measurementYes"
-                    type="button"
-                    onclick="selectMeasurementAvailability('available')"
-                  >
-                    <h4>
-                      Yes, measurements are available
-                    </h4>
-
-                    <p>
-                      Enter the relevant glucose and/or lipid
-                      results from a recent test.
-                    </p>
-                  </button>
-
-                </div>
-
-
-                <div
-                  id="measurementTypeSection"
-                  style="display:none;"
-                >
-
-                  <div class="subsection">
-
-                    <div class="subsection-title">
-                      Which measurements are available?
-                    </div>
-
-                    <div class="measurement-status">
-
-                      <button
-                        class="measurement-choice"
-                        id="typeGlucose"
-                        type="button"
-                        onclick="toggleMeasurementType('glucose')"
-                      >
-                        <h4>
-                          Blood glucose
-                        </h4>
-
-                        <p>
-                          Capillary blood glucose result from
-                          a glucometer or suitable point-of-care meter.
-                        </p>
-                      </button>
-
-
-                      <button
-                        class="measurement-choice"
-                        id="typeLipid"
-                        type="button"
-                        onclick="toggleMeasurementType('lipid')"
-                      >
-                        <h4>
-                          Lipid result
-                        </h4>
-
-                        <p>
-                          LDL and HDL results sufficient to
-                          calculate the proposed LDL:HDL ratio.
-                        </p>
-                      </button>
-
-                    </div>
-
-
-                    <!-- GLUCOSE -->
-                    <div
-                      class="measurement-section"
-                      id="glucoseMeasurementSection"
-                      style="display:none;"
-                    >
-
-                      <h3>
-                        Blood glucose
-                      </h3>
-
-                      <div class="question-help">
-                        Enter the random/on-the-spot capillary
-                        blood glucose reading displayed by the
-                        point-of-care meter.
-                      </div>
-
-                      <div class="input-group">
-
-                        <label
-                          class="input-label"
-                          for="glucoseInput"
-                        >
-                          Glucose · mg/dL
-                        </label>
-
-                        <input
-                          class="text-input"
-                          id="glucoseInput"
-                          type="number"
-                          min="20"
-                          max="600"
-                          step="1"
-                          inputmode="decimal"
-                          placeholder="e.g. 126"
-                          oninput="handleTier2Input()"
-                        />
-
-                        <div
-                          class="validation-message"
-                          id="glucoseValidation"
-                        >
-                          Please enter a glucose reading between
-                          20 and 600 mg/dL.
-                        </div>
-
-                      </div>
-
-
-                      <div class="input-group">
-
-                        <div class="input-label">
-                          Was this measurement recent?
-                        </div>
-
-                        <div class="recent-grid">
-
-                          <button
-                            class="recent-option"
-                            id="glucoseRecentYes"
-                            type="button"
-                            onclick="selectRecent('glucose', true)"
-                          >
-                            Yes, recent
-                          </button>
-
-                          <button
-                            class="recent-option"
-                            id="glucoseRecentNo"
-                            type="button"
-                            onclick="selectRecent('glucose', false)"
-                          >
-                            No, older result
-                          </button>
-
-                        </div>
-
-                      </div>
-
-                      <div class="tier2-warning">
-                        This value is incorporated only as part of
-                        the proposed ABEEM screening-risk model.
-                        It is not treated by the app as a diagnosis.
-                      </div>
-
-                    </div>
-
-
-                    <!-- LIPID -->
-                    <div
-                      class="measurement-section"
-                      id="lipidMeasurementSection"
-                      style="display:none;"
-                    >
-
-                      <h3>
-                        Lipid result
-                      </h3>
-
-                      <div class="question-help">
-                        Enter LDL and HDL values from a suitable
-                        lipid measurement. ABEEM calculates the
-                        proposed LDL:HDL ratio automatically.
-                      </div>
-
-                      <div class="input-row">
-
-                        <div class="input-group">
-
-                          <label
-                            class="input-label"
-                            for="ldlInput"
-                          >
-                            LDL · mg/dL
-                          </label>
-
-                          <input
-                            class="text-input"
-                            id="ldlInput"
-                            type="number"
-                            min="1"
-                            max="500"
-                            step="0.1"
-                            inputmode="decimal"
-                            placeholder="e.g. 110"
-                            oninput="handleTier2Input()"
-                          />
-
-                        </div>
-
-
-                        <div class="input-group">
-
-                          <label
-                            class="input-label"
-                            for="hdlInput"
-                          >
-                            HDL · mg/dL
-                          </label>
-
-                          <input
-                            class="text-input"
-                            id="hdlInput"
-                            type="number"
-                            min="1"
-                            max="200"
-                            step="0.1"
-                            inputmode="decimal"
-                            placeholder="e.g. 50"
-                            oninput="handleTier2Input()"
-                          />
-
-                        </div>
-
-                      </div>
-
-                      <div
-                        class="validation-message"
-                        id="lipidValidation"
-                      >
-                        Enter valid LDL and HDL values.
-                      </div>
-
-
-                      <div
-                        class="result-card"
-                        style="margin-top:20px; box-shadow:none;"
-                      >
-
-                        <div class="section-eyebrow">
-                          Calculated LDL : HDL ratio
-                        </div>
-
-                        <div
-                          class="result-score"
-                          id="lipidRatioPreview"
-                          style="font-size:48px;"
-                        >
-                          —
-                        </div>
-
-                        <div
-                          class="result-category"
-                          id="lipidRatioCategory"
-                        >
-                          Enter LDL and HDL
-                        </div>
-
-                      </div>
-
-
-                      <div class="input-group">
-
-                        <div class="input-label">
-                          Was this measurement recent?
-                        </div>
-
-                        <div class="recent-grid">
-
-                          <button
-                            class="recent-option"
-                            id="lipidRecentYes"
-                            type="button"
-                            onclick="selectRecent('lipid', true)"
-                          >
-                            Yes, recent
-                          </button>
-
-                          <button
-                            class="recent-option"
-                            id="lipidRecentNo"
-                            type="button"
-                            onclick="selectRecent('lipid', false)"
-                          >
-                            No, older result
-                          </button>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
-                    <div class="info-box">
-
-                      <strong>Proposed Tier 2 scoring:</strong>
-                      <br /><br />
-
-                      Capillary glucose:
-                      <strong>&lt;140 = 0</strong>,
-                      <strong>140–199 = 15</strong>,
-                      <strong>≥200 = 30</strong>.
-
-                      <br /><br />
-
-                      LDL : HDL ratio:
-                      <strong>&lt;2.5 = 0</strong>,
-                      <strong>2.5–3.5 = 10</strong>,
-                      <strong>&gt;3.5 = 20</strong>.
-
-                      <br /><br />
-
-                      These are proposed prototype scoring values.
-                      They do not by themselves establish a
-                      diabetes diagnosis.
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              <div
-                id="tier2NotTriggered"
-                style="display:none;"
-              >
-
-                <div class="result-card">
-                  <div class="result-category">
-                    Tier 2 not triggered
-                  </div>
-
-                  <p class="result-text">
-                    The Tier 1 score is below the proposed
-                    threshold for additional point-of-care
-                    measurements. The final screening assessment
-                    can now be viewed.
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div
-                class="info-box"
-                id="tier2NoMeasurementNote"
-                style="display:none;"
-              >
-                <strong>No measurement available:</strong>
-                Tier 2 will contribute no additional points.
-                ABEEM will clearly show that the final result is
-                based on the available Tier 1 information rather
-                than pretending a missing measurement was zero.
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               STEP 10 — FINAL
-          ================================================== -->
-
-          <div
-            class="questionnaire-step"
-            id="questionStep10"
-          >
-
-            <div class="question-block">
-
-              <div class="section-eyebrow">
-                ABEEM · Final assessment
-              </div>
-
-              <label class="question-label">
-                Your ABEEM screening-risk picture
-              </label>
-
-              <div class="question-help">
-                The final score combines the completed Tier 1
-                screening-risk calculation with available Tier 2
-                measurements when they were entered.
-              </div>
-
-
-              <div
-                class="result-card"
-                id="finalResultCard"
-                style="box-shadow:none;"
-              >
-
-                <div class="section-eyebrow">
-                  Final score
-                </div>
-
-                <div
-                  class="result-score"
-                  id="finalScore"
-                >
-                  —
-                </div>
-
-                <div
-                  class="result-category"
-                  id="finalCategory"
-                >
-                  Calculating
-                </div>
-
-                <p
-                  class="result-text"
-                  id="finalText"
-                >
-                  Your final screening-risk assessment
-                  is being prepared.
-                </p>
-
-                <div
-                  class="score-breakdown"
-                  id="finalBreakdown"
-                ></div>
-
-              </div>
-
-
-              <div
-                class="action-panel"
-                id="finalActionBox"
-              >
-                <h3>
-                  Next step
-                </h3>
-
-                <p>
-                  ABEEM is a screening-risk tool, not a
-                  diagnostic device.
-                </p>
-              </div>
-
-
-              <div class="info-box">
-
-                <strong>Important:</strong>
-                ABEEM does not diagnose diabetes.
-
-                <br /><br />
-
-                A high screening-risk result means that further
-                medical evaluation may be appropriate. Clinical
-                decisions should be made by a qualified healthcare
-                professional.
-
-                <br /><br />
-
-                No account or personal profile is required.
-                Screening information is kept only for this
-                current session.
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               NAVIGATION
-          ================================================== -->
+          <!-- QUESTIONNAIRE ACTIONS -->
 
           <div class="questionnaire-actions">
 
             <button
               class="secondary-button"
-              id="questionnaireBack"
-              onclick="previousQuestionnaireStep()"
               type="button"
+              onclick="previousQuestion()"
+              id="questionBackBtn"
             >
               ← Back
             </button>
 
 
             <button
-              class="questionnaire-continue"
-              id="questionnaireContinue"
-              onclick="nextQuestionnaireStep()"
+              class="primary-button questionnaire-continue"
               type="button"
+              id="questionNextBtn"
+              onclick="nextQuestion()"
+              disabled
             >
               Continue →
             </button>
 
           </div>
 
+        </div>
 
-          <div class="questionnaire-note">
+      </div>
 
-            <strong>
-              ABEEM is a screening-risk tool, not a diagnostic device.
-            </strong>
+    </section>
 
-            No account or personal profile is required.
-            Screening information is kept only for this current session.
+
+    <!-- =====================================================
+         RESULTS SCREEN
+    ====================================================== -->
+
+    <section class="screen" id="screen05">
+
+      <div class="screen-inner">
+
+        <div class="center-layout">
+
+          <div class="center-heading">
+
+            <div class="eyebrow">
+              ABEEM · Screening Results
+            </div>
+
+            <h1>
+              Your Risk Assessment Summary
+            </h1>
+
+            <p>
+              Based on your provided measurements and responses.
+            </p>
+
+          </div>
+
+
+          <div
+            class="result-card"
+            id="resultCardContainer"
+          >
+
+            <div
+              class="result-category"
+              id="resultCategoryTitle"
+            >
+              Evaluating Risk...
+            </div>
+
+            <div
+              class="result-score"
+              id="resultScoreValue"
+            >
+              0
+            </div>
+
+            <p
+              class="result-text"
+              id="resultDescriptionText"
+            >
+              Please wait while we compute your screening profile.
+            </p>
+
+
+            <div
+              class="score-breakdown"
+              id="scoreBreakdownList"
+            >
+              <!-- Dynamically populated breakdown rows -->
+            </div>
+
+          </div>
+
+
+          <div class="action-panel">
+
+            <h3>
+              Recommended Next Steps
+            </h3>
+
+            <p id="actionRecommendationText">
+              Review your results with a qualified local healthcare professional or community screening coordinator.
+            </p>
+
+          </div>
+
+
+          <div
+            class="mode-actions"
+            style="text-align: center; margin-top: 40px;"
+          >
+
+            <button
+              class="primary-button"
+              type="button"
+              onclick="resetScreeningSession()"
+            >
+              Start New Screening Session ↺
+            </button>
 
           </div>
 
         </div>
+
       </div>
+
     </section>
 
   </div>
 
 
-  <!-- =======================================================
-       JAVASCRIPT
-  ======================================================== -->
+  <!-- =====================================================
+       JAVASCRIPT LOGIC
+  ====================================================== -->
 
   <script>
 
-    /* =======================================================
-       GLOBAL STATE
-    ======================================================== */
+    let currentMode = null;
 
-    let selectedMode = null;
+    let currentSpread = 0;
 
-    let currentBookSpread = 0;
-
-    const bookSpreads = [
-      "spread0",
-      "spread1",
-      "spread2"
-    ];
-
-    let currentQuestionStep = 1;
-
-    const totalQuestionSteps = 10;
+    const totalSpreads = 3;
 
 
-    const screeningData = {
+    let currentQuestionIndex = 0;
+
+    const totalQuestions = 9;
+
+
+    let screeningData = {
 
       age: null,
 
-      sex: null,
-
-      familyHistory: {
-        value: null,
-        score: null
-      },
-
-      physicalActivity: {
-        value: null,
-        score: null
-      },
-
       waist: null,
 
-      hip: null,
+      waistUnit: 'cm',
 
-      whr: null,
+      activity: null,
 
-      whrScore: null,
+      activityScore: 0,
 
-      stress: {
-        sleep: null,
-        physical: null,
-        financial: null,
-        relax: null,
-        total: null,
-        category: null,
-        score: null
-      },
+      family: null,
 
-      alcohol: {
-        never: null,
-        frequency: null,
-        quantity: null,
-        binge: null,
-        total: null,
-        category: null,
-        score: null
-      },
+      familyScore: 0,
 
-      tier1: {
-        total: null,
-        category: null
-      },
+      bp: null,
 
-      tier2: {
+      bpScore: 0,
 
-        triggered: false,
+      // Non-scoring medication information
+      medication: null,
 
-        availability: null,
+      // Sleep information
+      sleepMedication: null,
 
-        glucoseAvailable: false,
+      sleepDisturbance: null,
 
-        lipidAvailable: false,
+      sugar: null,
 
-        glucose: null,
+      sugarScore: 0,
 
-        glucoseScore: null,
-
-        glucoseRecent: null,
-
-        ldl: null,
-
-        hdl: null,
-
-        lipidRatio: null,
-
-        lipidScore: null,
-
-        lipidRecent: null,
-
-        total: 0
-      },
-
-      final: {
-        total: null,
-        category: null
-      }
+      totalScore: 0
 
     };
 
 
-    /* =======================================================
+    /* -------------------------------------------------------
        SCREEN NAVIGATION
-    ======================================================== */
-
-    function showScreen(fromId, toId) {
-
-      const from = document.getElementById(fromId);
-      const to = document.getElementById(toId);
-
-      if (from) {
-        from.classList.remove("active");
-      }
-
-      if (to) {
-        to.classList.add("active");
-      }
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
+    ------------------------------------------------------- */
 
 
     function goToModeSelection() {
 
-      showScreen("screen01", "screen02");
+      switchScreen('screen02');
 
     }
 
 
-    /* =======================================================
-       MODE SELECTION
-    ======================================================== */
-
     function selectMode(mode) {
 
-      selectedMode = mode;
+      currentMode = mode;
 
       document
-        .getElementById("modeSelf")
-        .classList.toggle("selected", mode === "self");
+        .getElementById('modeSelf')
+        .classList.remove('selected');
 
       document
-        .getElementById("modeOther")
-        .classList.toggle("selected", mode === "other");
+        .getElementById('modeOther')
+        .classList.remove('selected');
+
+
+      if (mode === 'self') {
+
+        document
+          .getElementById('modeSelf')
+          .classList.add('selected');
+
+      } else {
+
+        document
+          .getElementById('modeOther')
+          .classList.add('selected');
+
+      }
+
 
       document
-        .getElementById("modeContinue")
-        .disabled = false;
+        .getElementById('modeContinue')
+        .removeAttribute('disabled');
 
     }
 
 
     function continueFromMode() {
 
-      if (!selectedMode) {
-        return;
-      }
+      if (!currentMode) return;
 
-      currentBookSpread = 0;
+      switchScreen('screen03');
 
-      renderCurrentSpread();
-
-      showScreen("screen02", "screen03");
+      updateBookSpread();
 
     }
 
 
-    /* =======================================================
-       BOOKLET
-    ======================================================== */
+    function switchScreen(screenId) {
 
-    function renderCurrentSpread() {
+      document
+        .querySelectorAll('.screen')
+        .forEach(s => s.classList.remove('active'));
 
-      bookSpreads.forEach((id, index) => {
+      document
+        .getElementById(screenId)
+        .classList.add('active');
 
-        const spread = document.getElementById(id);
-
-        if (!spread) {
-          return;
-        }
-
-        spread.classList.toggle(
-          "active",
-          index === currentBookSpread
-        );
-
-      });
-
-
-      const progress =
-        document.getElementById("bookProgress");
-
-      if (progress) {
-
-        progress.textContent =
-          `Spread ${currentBookSpread + 1} of ${bookSpreads.length}`;
-
-      }
-
-
-      updateBookButtons();
+      window.scrollTo(0, 0);
 
     }
 
 
-    function updateBookButtons() {
-
-      const previous =
-        document.getElementById("bookPrevious");
-
-      const next =
-        document.getElementById("bookNext");
+    /* -------------------------------------------------------
+       BOOK
+    ------------------------------------------------------- */
 
 
-      if (previous) {
+    function updateBookSpread() {
 
-        previous.disabled =
-          currentBookSpread === 0;
+      for (let i = 0; i < totalSpreads; i++) {
 
-        previous.style.opacity =
-          currentBookSpread === 0 ? "0.4" : "1";
+        const spread =
+          document.getElementById(`spread${i}`);
 
-      }
+        if (i === currentSpread) {
 
-
-      if (next) {
-
-        if (
-          currentBookSpread ===
-          bookSpreads.length - 1
-        ) {
-
-          /*
-             The final spread contains its own
-             "Begin ABEEM screening" button.
-          */
-
-          next.style.display = "none";
+          spread.classList.add('active');
 
         } else {
 
-          next.style.display = "inline-flex";
-
-          next.disabled = false;
-
-          next.textContent = "Next →";
+          spread.classList.remove('active');
 
         }
 
       }
 
-    }
+
+      document
+        .getElementById('bookProgress')
+        .innerText =
+        `Spread ${currentSpread + 1} of ${totalSpreads}`;
 
 
-    function nextBookSpread() {
+      document
+        .getElementById('prevSpread')
+        .style.visibility =
+        currentSpread === 0
+          ? 'hidden'
+          : 'visible';
 
-      if (
-        currentBookSpread <
-        bookSpreads.length - 1
-      ) {
 
-        currentBookSpread++;
+      const nextBtn =
+        document.getElementById('nextSpread');
 
-        renderCurrentSpread();
+
+      if (currentSpread === totalSpreads - 1) {
+
+        nextBtn.innerText =
+          'Start Screening →';
+
+        nextBtn.onclick =
+          startQuestionnaire;
+
+      } else {
+
+        nextBtn.innerText =
+          'Next →';
+
+        nextBtn.onclick =
+          nextSpread;
 
       }
 
     }
 
 
-    function previousBookSpread() {
+    function nextSpread() {
 
-      if (currentBookSpread > 0) {
+      if (currentSpread < totalSpreads - 1) {
 
-        currentBookSpread--;
+        currentSpread++;
 
-        renderCurrentSpread();
+        updateBookSpread();
 
       }
 
     }
 
 
-    /* =======================================================
-       START SCREENING
-    ======================================================== */
+    function previousSpread() {
 
-    function beginScreening() {
+      if (currentSpread > 0) {
 
-      currentQuestionStep = 1;
+        currentSpread--;
 
-      showQuestionnaireStep(1);
+        updateBookSpread();
 
-      showScreen("screen03", "screen04");
+      }
 
-      setTimeout(() => {
+    }
 
-        const ageInput =
-          document.getElementById("ageInput");
 
-        if (ageInput) {
-          ageInput.focus();
+    /* -------------------------------------------------------
+       QUESTIONNAIRE
+    ------------------------------------------------------- */
+
+
+    function startQuestionnaire() {
+
+      switchScreen('screen04');
+
+      updateQuestionnaireUI();
+
+    }
+
+
+    function updateQuestionnaireUI() {
+
+      for (let i = 1; i <= totalQuestions; i++) {
+
+        const step =
+          document.getElementById(`qStep${i}`);
+
+        if (i - 1 === currentQuestionIndex) {
+
+          step.classList.add('active');
+
+        } else {
+
+          step.classList.remove('active');
+
         }
 
-      }, 350);
-
-    }
-
-
-    /* =======================================================
-       AGE
-    ======================================================== */
-
-    function restrictAgeKeys(event) {
-
-      const allowed = [
-        "Backspace",
-        "Delete",
-        "ArrowLeft",
-        "ArrowRight",
-        "Tab"
-      ];
-
-      if (
-        allowed.includes(event.key) ||
-        /^[0-9]$/.test(event.key)
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-
-    }
-
-
-    function validateAgeInput() {
-
-      const input =
-        document.getElementById("ageInput");
-
-      const validation =
-        document.getElementById("ageValidation");
-
-      if (!input) {
-        return false;
-      }
-
-      const rawValue =
-        input.value.trim();
-
-      if (rawValue === "") {
-
-        input.classList.remove("invalid");
-
-        validation.classList.remove("visible");
-
-        return false;
-
       }
 
 
-      const isWholeNumber =
-        /^\d+$/.test(rawValue);
-
-
-      if (!isWholeNumber) {
-
-        input.classList.add("invalid");
-
-        validation.textContent =
-          "Please enter your age as a whole number.";
-
-        validation.classList.add("visible");
-
-        return false;
-
-      }
-
-
-      const age =
-        Number(rawValue);
-
-
-      if (
-        !Number.isInteger(age) ||
-        age < 18 ||
-        age > 120
-      ) {
-
-        input.classList.add("invalid");
-
-        validation.textContent =
-          "Please enter a valid age between 18 and 120.";
-
-        validation.classList.add("visible");
-
-        return false;
-
-      }
-
-
-      input.classList.remove("invalid");
-
-      validation.classList.remove("visible");
-
-      return true;
-
-    }
-
-
-    function handleAgeInput() {
-
-      validateAgeInput();
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function calculateAgeScore(age) {
-
-      if (age < 35) {
-        return 0;
-      }
-
-      if (age <= 49) {
-        return 20;
-      }
-
-      return 30;
-
-    }
-
-
-    /* =======================================================
-       OPTION SELECTION
-    ======================================================== */
-
-    function selectOption(button) {
-
-      const group =
-        button.dataset.group;
-
-      if (!group) {
-        return;
-      }
+      const progressPct =
+        ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
 
       document
-        .querySelectorAll(
-          `[data-group="${group}"]`
-        )
-        .forEach(option => {
+        .getElementById('progressFill')
+        .style.width =
+        `${progressPct}%`;
 
-          option.classList.remove("selected");
 
-        });
+      document
+        .getElementById('questionProgressLabel')
+        .innerText =
+        `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
 
 
-      button.classList.add("selected");
+      document
+        .getElementById('prevQuestionBtn')
+        .style.visibility =
+        currentQuestionIndex === 0
+          ? 'hidden'
+          : 'visible';
 
 
-      saveOptionAnswer(button);
+      const nextBtn =
+        document.getElementById('questionNextBtn');
 
-      updateQuestionnaireButton();
 
-    }
+      if (currentQuestionIndex === totalQuestions - 1) {
 
-
-    function saveOptionAnswer(button) {
-
-      const group =
-        button.dataset.group;
-
-      const value =
-        button.dataset.value;
-
-      const score =
-        button.dataset.score !== undefined
-          ? Number(button.dataset.score)
-          : null;
-
-
-      if (group === "sex") {
-
-        screeningData.sex = value;
-
-      }
-
-
-      if (group === "family") {
-
-        screeningData.familyHistory.value =
-          value;
-
-        screeningData.familyHistory.score =
-          score;
-
-      }
-
-
-      if (group === "activity") {
-
-        screeningData.physicalActivity.value =
-          value;
-
-        screeningData.physicalActivity.score =
-          score;
-
-      }
-
-
-      if (group === "stressSleep") {
-
-        screeningData.stress.sleep =
-          score;
-
-      }
-
-
-      if (group === "stressPhysical") {
-
-        screeningData.stress.physical =
-          score;
-
-      }
-
-
-      if (group === "stressFinancial") {
-
-        screeningData.stress.financial =
-          score;
-
-      }
-
-
-      if (group === "stressRelax") {
-
-        screeningData.stress.relax =
-          score;
-
-      }
-
-
-      if (group === "alcoholFrequency") {
-
-        screeningData.alcohol.frequency =
-          score;
-
-      }
-
-
-      if (group === "alcoholQuantity") {
-
-        screeningData.alcohol.quantity =
-          score;
-
-      }
-
-
-      if (group === "alcoholBinge") {
-
-        screeningData.alcohol.binge =
-          score;
-
-      }
-
-    }
-
-
-    /* =======================================================
-       MEASUREMENTS
-    ======================================================== */
-
-    function validateMeasurementInputs() {
-
-      const waistInput =
-        document.getElementById("waistInput");
-
-      const hipInput =
-        document.getElementById("hipInput");
-
-      const waistValidation =
-        document.getElementById("waistValidation");
-
-      const hipValidation =
-        document.getElementById("hipValidation");
-
-
-      const waist =
-        Number(waistInput.value);
-
-      const hip =
-        Number(hipInput.value);
-
-
-      const waistValid =
-        Number.isFinite(waist) &&
-        waist >= 40 &&
-        waist <= 200;
-
-
-      const hipValid =
-        Number.isFinite(hip) &&
-        hip >= 40 &&
-        hip <= 200;
-
-
-      waistInput.classList.toggle(
-        "invalid",
-        waistInput.value !== "" && !waistValid
-      );
-
-      hipInput.classList.toggle(
-        "invalid",
-        hipInput.value !== "" && !hipValid
-      );
-
-
-      waistValidation.classList.toggle(
-        "visible",
-        !waistValid
-      );
-
-      hipValidation.classList.toggle(
-        "visible",
-        !hipValid
-      );
-
-
-      if (waistValid && hipValid) {
-
-        screeningData.waist = waist;
-
-        screeningData.hip = hip;
-
-        screeningData.whr =
-          waist / hip;
-
-        screeningData.whrScore =
-          calculateWHRScore();
-
-        renderWHRPreview();
+        nextBtn.innerText =
+          'Calculate Results →';
 
       } else {
 
-        screeningData.waist = null;
-
-        screeningData.hip = null;
-
-        screeningData.whr = null;
-
-        screeningData.whrScore = null;
-
-        renderWHRPreview();
+        nextBtn.innerText =
+          'Continue →';
 
       }
 
 
-      return waistValid && hipValid;
+      validateCurrentQuestion();
 
     }
 
 
-    function handleMeasurementInput() {
+    /* -------------------------------------------------------
+       AGE VALIDATION
+    ------------------------------------------------------- */
 
-      validateMeasurementInputs();
 
-      updateQuestionnaireButton();
+    function validateAge() {
 
-    }
-
-
-    function calculateWHRScore() {
-
-      if (
-        screeningData.whr === null ||
-        screeningData.sex === null
-      ) {
-
-        return null;
-
-      }
-
-
-      const threshold =
-        screeningData.sex === "male"
-          ? 0.96
-          : 0.88;
-
-
-      return screeningData.whr >= threshold
-        ? 20
-        : 0;
-
-    }
-
-
-    function renderWHRPreview() {
-
-      const value =
-        document.getElementById("whrPreview");
-
-      const category =
-        document.getElementById("whrCategory");
-
-
-      if (
-        screeningData.whr === null ||
-        screeningData.sex === null
-      ) {
-
-        value.textContent = "—";
-
-        category.textContent =
-          screeningData.sex === null
-            ? "Select sex and enter measurements"
-            : "Enter both measurements";
-
-        return;
-
-      }
-
-
-      value.textContent =
-        screeningData.whr.toFixed(2);
-
-
-      const threshold =
-        screeningData.sex === "male"
-          ? 0.96
-          : 0.88;
-
-
-      category.textContent =
-        screeningData.whr >= threshold
-          ? `Proposed abdominal-obesity threshold reached · +20`
-          : `Below proposed threshold · +0`;
-
-    }
-
-
-    /* =======================================================
-       STRESS
-    ======================================================== */
-
-    function calculateStressScore() {
-
-      const s =
-        screeningData.stress;
-
-
-      if (
-        s.sleep === null ||
-        s.physical === null ||
-        s.financial === null ||
-        s.relax === null
-      ) {
-
-        return false;
-
-      }
-
-
-      s.total =
-        s.sleep +
-        s.physical +
-        s.financial +
-        s.relax;
-
-
-      if (s.total <= 4) {
-
-        s.category = "Low stress";
-
-        s.score = 0;
-
-      } else if (s.total <= 9) {
-
-        s.category = "Moderate stress";
-
-        s.score = 10;
-
-      } else {
-
-        s.category = "High stress";
-
-        s.score = 20;
-
-      }
-
-
-      return true;
-
-    }
-
-
-    /* =======================================================
-       ALCOHOL
-    ======================================================== */
-
-    function selectAlcoholNever() {
-
-      screeningData.alcohol.never = true;
-
-      screeningData.alcohol.frequency = null;
-
-      screeningData.alcohol.quantity = null;
-
-      screeningData.alcohol.binge = null;
-
-      screeningData.alcohol.total = 0;
-
-      screeningData.alcohol.category =
-        "Never / non-drinker";
-
-      screeningData.alcohol.score = 0;
-
-
-      document
-        .getElementById("alcoholNever")
-        .classList.add("selected");
-
-      document
-        .getElementById("alcoholDrinker")
-        .classList.remove("selected");
-
-
-      document
-        .getElementById("alcoholDetails")
-        .style.display = "none";
-
-
-      document
-        .querySelectorAll(
-          '[data-group="alcoholFrequency"], [data-group="alcoholQuantity"], [data-group="alcoholBinge"]'
-        )
-        .forEach(button => {
-
-          button.classList.remove("selected");
-
-        });
-
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function selectAlcoholDrinker() {
-
-      screeningData.alcohol.never = false;
-
-      screeningData.alcohol.total = null;
-
-      screeningData.alcohol.category = null;
-
-      screeningData.alcohol.score = null;
-
-
-      document
-        .getElementById("alcoholNever")
-        .classList.remove("selected");
-
-      document
-        .getElementById("alcoholDrinker")
-        .classList.add("selected");
-
-
-      document
-        .getElementById("alcoholDetails")
-        .style.display = "block";
-
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function calculateAlcoholScore() {
-
-      const a =
-        screeningData.alcohol;
-
-
-      if (a.never === true) {
-
-        a.total = 0;
-
-        a.category =
-          "Never / non-drinker";
-
-        a.score = 0;
-
-        return true;
-
-      }
-
-
-      if (
-        a.never !== false ||
-        a.frequency === null ||
-        a.quantity === null ||
-        a.binge === null
-      ) {
-
-        return false;
-
-      }
-
-
-      a.total =
-        a.frequency +
-        a.quantity +
-        a.binge;
-
-
-      if (a.total <= 3) {
-
-        a.category =
-          "Low risk / non-drinker";
-
-        a.score = 0;
-
-      } else if (a.total <= 7) {
-
-        a.category =
-          "Moderate / hazardous";
-
-        a.score = 10;
-
-      } else {
-
-        a.category =
-          "High-risk / harmful";
-
-        a.score = 20;
-
-      }
-
-
-      return true;
-
-    }
-
-
-    /* =======================================================
-       TIER 1
-    ======================================================== */
-
-    function calculateTier1Score() {
-
-      if (
-        screeningData.age === null ||
-        screeningData.sex === null ||
-        screeningData.familyHistory.score === null ||
-        screeningData.physicalActivity.score === null ||
-        screeningData.whrScore === null ||
-        screeningData.stress.score === null ||
-        screeningData.alcohol.score === null
-      ) {
-
-        return null;
-
-      }
-
-
-      const ageScore =
-        calculateAgeScore(
-          screeningData.age
+      const val =
+        parseInt(
+          document.getElementById('ageInput').value
         );
 
+
+      const errorMsg =
+        document.getElementById('ageError');
+
+
+      const inputField =
+        document.getElementById('ageInput');
+
+
+      if (
+        !isNaN(val) &&
+        val >= 18 &&
+        val <= 120
+      ) {
+
+        screeningData.age = val;
+
+        inputField
+          .classList
+          .remove('invalid');
+
+        errorMsg
+          .classList
+          .remove('visible');
+
+        document
+          .getElementById('questionNextBtn')
+          .removeAttribute('disabled');
+
+      } else {
+
+        inputField
+          .classList
+          .add('invalid');
+
+        errorMsg
+          .classList
+          .add('visible');
+
+        document
+          .getElementById('questionNextBtn')
+          .setAttribute('disabled', 'true');
+
+      }
+
+    }
+
+
+    /* -------------------------------------------------------
+       MEASUREMENT VALIDATION
+    ------------------------------------------------------- */
+
+
+    function validateMeasurements() {
+
+      const val =
+        parseFloat(
+          document.getElementById('waistInput').value
+        );
+
+
+      const unit =
+        document.getElementById('waistUnit').value;
+
+
+      const errorMsg =
+        document.getElementById('measurementError');
+
+
+      const inputField =
+        document.getElementById('waistInput');
+
+
+      if (
+        !isNaN(val) &&
+        val > 0
+      ) {
+
+        screeningData.waist = val;
+
+        screeningData.waistUnit = unit;
+
+        inputField
+          .classList
+          .remove('invalid');
+
+        errorMsg
+          .classList
+          .remove('visible');
+
+        document
+          .getElementById('questionNextBtn')
+          .removeAttribute('disabled');
+
+      } else {
+
+        inputField
+          .classList
+          .add('invalid');
+
+        errorMsg
+          .classList
+          .add('visible');
+
+        document
+          .getElementById('questionNextBtn')
+          .setAttribute('disabled', 'true');
+
+      }
+
+    }
+
+
+    /* -------------------------------------------------------
+       GENERAL OPTION SELECTION
+    ------------------------------------------------------- */
+
+
+    function selectOption(category, value, score) {
+
+      if (category === 'activity') {
+
+        screeningData.activity = value;
+
+        screeningData.activityScore = score;
+
+      } else if (category === 'family') {
+
+        screeningData.family = value;
+
+        screeningData.familyScore = score;
+
+      } else if (category === 'bp') {
+
+        screeningData.bp = value;
+
+        screeningData.bpScore = score;
+
+      } else if (category === 'medication') {
+
+        /*
+          Medication is intentionally NON-SCORING.
+          The score value passed here is ignored.
+        */
+
+        screeningData.medication = value;
+
+      } else if (category === 'sleepDisturbance') {
+
+        /*
+          Sleep disturbance is recorded for screening context.
+          It does not change the existing ABEEM score.
+        */
+
+        screeningData.sleepDisturbance = value;
+
+      } else if (category === 'sugar') {
+
+        screeningData.sugar = value;
+
+        screeningData.sugarScore = score;
+
+      }
+
+
+      /*
+        Highlight selected button within the current active step.
+      */
+
+      const activeStep =
+        document.querySelector(
+          '.questionnaire-step.active'
+        );
+
+
+      activeStep
+        .querySelectorAll('.option-button')
+        .forEach(btn =>
+          btn.classList.remove('selected')
+        );
+
+
+      /*
+        event.currentTarget works because selectOption()
+        is called directly from the clicked button.
+      */
+
+      if (event && event.currentTarget) {
+
+        event.currentTarget
+          .classList
+          .add('selected');
+
+      }
+
+
+      document
+        .getElementById('questionNextBtn')
+        .removeAttribute('disabled');
+
+    }
+
+
+    /* -------------------------------------------------------
+       SLEEP MEDICATION LOGIC
+    ------------------------------------------------------- */
+
+
+    function selectSleepMedication(value, button) {
+
+      screeningData.sleepMedication = value;
+
+
+      const activeStep =
+        document.querySelector(
+          '.questionnaire-step.active'
+        );
+
+
+      activeStep
+        .querySelectorAll('.option-button')
+        .forEach(btn =>
+          btn.classList.remove('selected')
+        );
+
+
+      button.classList.add('selected');
+
+
+      const sleepSection =
+        document.getElementById(
+          'sleepDisturbanceSection'
+        );
+
+
+      if (value === 'yes') {
+
+        /*
+          If the participant takes sleep medication
+          or medication that may affect sleep,
+          skip the sleep-disturbance question.
+        */
+
+        sleepSection.style.display = 'none';
+
+
+        screeningData.sleepDisturbance = null;
+
+
+        activeStep
+          .querySelectorAll(
+            '[data-group="sleepDisturbance"]'
+          )
+          .forEach(btn =>
+            btn.classList.remove('selected')
+          );
+
+
+      } else {
+
+        /*
+          If they are NOT taking such medication,
+          show the sleep-disturbance question.
+        */
+
+        sleepSection.style.display = 'block';
+
+      }
+
+
+      document
+        .getElementById('questionNextBtn')
+        .removeAttribute('disabled');
+
+    }
+
+
+    /* -------------------------------------------------------
+       CURRENT QUESTION VALIDATION
+    ------------------------------------------------------- */
+
+
+    function validateCurrentQuestion() {
+
+      const nextBtn =
+        document.getElementById(
+          'questionNextBtn'
+        );
+
+
+      /*
+        Question 1 — Age
+      */
+
+      if (currentQuestionIndex === 0) {
+
+        validateAge();
+
+        return;
+
+      }
+
+
+      /*
+        Question 2 — Waist
+      */
+
+      if (currentQuestionIndex === 1) {
+
+        validateMeasurements();
+
+        return;
+
+      }
+
+
+      /*
+        Questions 3–6:
+        Activity, Family, BP, Medication
+      */
+
+      if (
+        currentQuestionIndex >= 2 &&
+        currentQuestionIndex <= 5
+      ) {
+
+        let hasSelected = false;
+
+
+        const activeStep =
+          document.querySelector(
+            '.questionnaire-step.active'
+          );
+
+
+        if (
+          activeStep.querySelector(
+            '.option-button.selected'
+          )
+        ) {
+
+          hasSelected = true;
+
+        }
+
+
+        if (hasSelected) {
+
+          nextBtn.removeAttribute(
+            'disabled'
+          );
+
+        } else {
+
+          nextBtn.setAttribute(
+            'disabled',
+            'true'
+          );
+
+        }
+
+
+        return;
+
+      }
+
+
+      /*
+        Question 7 — Sleep medication
+      */
+
+      if (currentQuestionIndex === 6) {
+
+        /*
+          No answer to the sleep medication
+          question yet.
+        */
+
+        if (!screeningData.sleepMedication) {
+
+          nextBtn.setAttribute(
+            'disabled',
+            'true'
+          );
+
+          return;
+
+        }
+
+
+        /*
+          If they said NO to sleep medication,
+          they must answer the sleep-disturbance
+          question.
+        */
+
+        if (
+          screeningData.sleepMedication === 'no' &&
+          !screeningData.sleepDisturbance
+        ) {
+
+          nextBtn.setAttribute(
+            'disabled',
+            'true'
+          );
+
+          return;
+
+        }
+
+
+        /*
+          If they said YES, sleep disturbance
+          was intentionally skipped.
+        */
+
+        nextBtn.removeAttribute(
+          'disabled'
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Questions 8 and 9
+      */
+
+      nextBtn.removeAttribute(
+        'disabled'
+      );
+
+    }
+
+
+    /* -------------------------------------------------------
+       NEXT / PREVIOUS QUESTION
+    ------------------------------------------------------- */
+
+
+    function nextQuestion() {
+
+      if (
+        currentQuestionIndex <
+        totalQuestions - 1
+      ) {
+
+        currentQuestionIndex++;
+
+        updateQuestionnaireUI();
+
+      } else {
+
+        computeResults();
+
+      }
+
+    }
+
+
+    function previousQuestion() {
+
+      if (currentQuestionIndex > 0) {
+
+        currentQuestionIndex--;
+
+        updateQuestionnaireUI();
+
+      }
+
+    }
+
+
+    /* -------------------------------------------------------
+       RESULTS
+    ------------------------------------------------------- */
+
+
+    function computeResults() {
+
+      /*
+        Simple risk points computation based on
+        Finnish Diabetes Risk Score (FINDRISK)
+        model adapted.
+      */
+
+
+      let ageScore = 0;
+
+
+      if (
+        screeningData.age >= 45 &&
+        screeningData.age < 55
+      ) {
+
+        ageScore = 2;
+
+      } else if (
+        screeningData.age >= 55 &&
+        screeningData.age < 65
+      ) {
+
+        ageScore = 3;
+
+      } else if (
+        screeningData.age >= 65
+      ) {
+
+        ageScore = 4;
+
+      }
+
+
+      let waistInCm =
+        screeningData.waist;
+
+
+      if (
+        screeningData.waistUnit === 'in'
+      ) {
+
+        waistInCm =
+          screeningData.waist * 2.54;
+
+      }
+
+
+      let waistScore = 0;
+
+
+      /*
+        General thresholds approximation
+        (Male/Female generalized)
+      */
+
+      if (
+        waistInCm >= 94 &&
+        waistInCm < 102
+      ) {
+
+        waistScore = 3;
+
+      } else if (
+        waistInCm >= 102
+      ) {
+
+        waistScore = 4;
+
+      }
+
+
+      /*
+        IMPORTANT:
+        Medication and sleep answers are NOT
+        included in this total.
+      */
 
       const total =
         ageScore +
-        screeningData.familyHistory.score +
-        screeningData.physicalActivity.score +
-        screeningData.whrScore +
-        screeningData.stress.score +
-        screeningData.alcohol.score;
+        waistScore +
+        screeningData.activityScore +
+        screeningData.familyScore +
+        screeningData.bpScore +
+        screeningData.sugarScore;
 
 
-      screeningData.tier1.total =
+      screeningData.totalScore =
         total;
 
 
-      if (total < 50) {
+      displayResults(
+        ageScore,
+        waistScore
+      );
 
-        screeningData.tier1.category =
-          "Low screening risk";
 
-      } else if (total <= 85) {
-
-        screeningData.tier1.category =
-          "Moderate screening risk";
-
-      } else {
-
-        screeningData.tier1.category =
-          "High screening risk";
-
-      }
-
-
-      return total;
-
-    }
-
-
-    function renderTier1Preview() {
-
-      const total =
-        calculateTier1Score();
-
-
-      const score =
-        document.getElementById("tier1Score");
-
-      const category =
-        document.getElementById("tier1Category");
-
-      const text =
-        document.getElementById("tier1Text");
-
-      const breakdown =
-        document.getElementById("tier1Breakdown");
-
-      const card =
-        document.getElementById("tier1ResultCard");
-
-
-      if (total === null) {
-
-        score.textContent = "—";
-
-        category.textContent =
-          "Incomplete";
-
-        text.textContent =
-          "Some required screening information is missing.";
-
-        breakdown.innerHTML = "";
-
-        return;
-
-      }
-
-
-      score.textContent =
-        total;
-
-
-      category.textContent =
-        screeningData.tier1.category;
-
-
-      card.className =
-        "result-card " +
-        getRiskClass(
-          screeningData.tier1.category
-        );
-
-
-      text.textContent =
-        getRiskDescription(
-          screeningData.tier1.category
-        );
-
-
-      const ageScore =
-        calculateAgeScore(
-          screeningData.age
-        );
-
-
-      breakdown.innerHTML = `
-
-        ${breakdownRow(
-          "Age",
-          ageScore
-        )}
-
-        ${breakdownRow(
-          "Family history",
-          screeningData.familyHistory.score
-        )}
-
-        ${breakdownRow(
-          "Physical activity",
-          screeningData.physicalActivity.score
-        )}
-
-        ${breakdownRow(
-          "Waist-to-hip ratio",
-          screeningData.whrScore
-        )}
-
-        ${breakdownRow(
-          "Stress",
-          screeningData.stress.score
-        )}
-
-        ${breakdownRow(
-          "Alcohol",
-          screeningData.alcohol.score
-        )}
-
-      `;
-
-    }
-
-
-    /* =======================================================
-       TIER 2
-    ======================================================== */
-
-    function prepareTier2Screen() {
-
-      const tier2Question =
-        document.getElementById(
-          "tier2MeasurementQuestion"
-        );
-
-      const notTriggered =
-        document.getElementById(
-          "tier2NotTriggered"
-        );
-
-      const triggerText =
-        document.getElementById(
-          "tier2TriggerText"
-        );
-
-      const triggerDescription =
-        document.getElementById(
-          "tier2TriggerDescription"
-        );
-
-
-      const tier1 =
-        screeningData.tier1.total;
-
-
-      if (
-        tier1 !== null &&
-        tier1 >= 50
-      ) {
-
-        screeningData.tier2.triggered = true;
-
-        tier2Question.style.display =
-          "block";
-
-        notTriggered.style.display =
-          "none";
-
-
-        triggerText.textContent =
-          "Tier 2 is available";
-
-
-        triggerDescription.textContent =
-          `Tier 1 score: ${tier1}. The proposed Tier 2 trigger is 50 points or above.`;
-
-      } else {
-
-        screeningData.tier2.triggered = false;
-
-        screeningData.tier2.total = 0;
-
-        tier2Question.style.display =
-          "none";
-
-        notTriggered.style.display =
-          "block";
-
-
-        triggerText.textContent =
-          "Tier 2 not triggered";
-
-
-        triggerDescription.textContent =
-          `Tier 1 score: ${tier1}. The score is below the proposed Tier 2 threshold.`;
-
-      }
-
-
-      resetTier2UI();
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function resetTier2UI() {
-
-      document
-        .getElementById("measurementTypeSection")
-        .style.display = "none";
-
-      document
-        .getElementById("tier2NoMeasurementNote")
-        .style.display = "none";
-
-
-      document
-        .getElementById("measurementNo")
-        .classList.remove("selected");
-
-      document
-        .getElementById("measurementYes")
-        .classList.remove("selected");
-
-      document
-        .getElementById("typeGlucose")
-        .classList.remove("selected");
-
-      document
-        .getElementById("typeLipid")
-        .classList.remove("selected");
-
-
-      document
-        .getElementById("glucoseMeasurementSection")
-        .style.display = "none";
-
-      document
-        .getElementById("lipidMeasurementSection")
-        .style.display = "none";
-
-
-      screeningData.tier2.availability =
-        null;
-
-      screeningData.tier2.glucoseAvailable =
-        false;
-
-      screeningData.tier2.lipidAvailable =
-        false;
-
-      screeningData.tier2.total =
-        0;
-
-    }
-
-
-    function selectMeasurementAvailability(
-      availability
-    ) {
-
-      screeningData.tier2.availability =
-        availability;
-
-
-      document
-        .getElementById("measurementNo")
-        .classList.toggle(
-          "selected",
-          availability === "none"
-        );
-
-
-      document
-        .getElementById("measurementYes")
-        .classList.toggle(
-          "selected",
-          availability === "available"
-        );
-
-
-      const typeSection =
-        document.getElementById(
-          "measurementTypeSection"
-        );
-
-
-      const noNote =
-        document.getElementById(
-          "tier2NoMeasurementNote"
-        );
-
-
-      if (availability === "available") {
-
-        typeSection.style.display =
-          "block";
-
-        noNote.style.display =
-          "none";
-
-      } else {
-
-        typeSection.style.display =
-          "none";
-
-        noNote.style.display =
-          "block";
-
-
-        screeningData.tier2.glucoseAvailable =
-          false;
-
-        screeningData.tier2.lipidAvailable =
-          false;
-
-        screeningData.tier2.total =
-          0;
-
-      }
-
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function toggleMeasurementType(type) {
-
-      if (type === "glucose") {
-
-        screeningData.tier2.glucoseAvailable =
-          !screeningData.tier2.glucoseAvailable;
-
-
-        document
-          .getElementById("typeGlucose")
-          .classList.toggle(
-            "selected",
-            screeningData.tier2.glucoseAvailable
-          );
-
-
-        document
-          .getElementById("glucoseMeasurementSection")
-          .style.display =
-          screeningData.tier2.glucoseAvailable
-            ? "block"
-            : "none";
-
-
-        if (
-          !screeningData.tier2.glucoseAvailable
-        ) {
-
-          screeningData.tier2.glucose = null;
-
-          screeningData.tier2.glucoseScore = null;
-
-          screeningData.tier2.glucoseRecent = null;
-
-        }
-
-      }
-
-
-      if (type === "lipid") {
-
-        screeningData.tier2.lipidAvailable =
-          !screeningData.tier2.lipidAvailable;
-
-
-        document
-          .getElementById("typeLipid")
-          .classList.toggle(
-            "selected",
-            screeningData.tier2.lipidAvailable
-          );
-
-
-        document
-          .getElementById("lipidMeasurementSection")
-          .style.display =
-          screeningData.tier2.lipidAvailable
-            ? "block"
-            : "none";
-
-
-        if (
-          !screeningData.tier2.lipidAvailable
-        ) {
-
-          screeningData.tier2.ldl = null;
-
-          screeningData.tier2.hdl = null;
-
-          screeningData.tier2.lipidRatio = null;
-
-          screeningData.tier2.lipidScore = null;
-
-          screeningData.tier2.lipidRecent = null;
-
-        }
-
-      }
-
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function validateTier2Inputs() {
-
-      let valid = true;
-
-
-      if (
-        screeningData.tier2.glucoseAvailable
-      ) {
-
-        const input =
-          document.getElementById(
-            "glucoseInput"
-          );
-
-        const validation =
-          document.getElementById(
-            "glucoseValidation"
-          );
-
-
-        const value =
-          Number(input.value);
-
-
-        const glucoseValid =
-          Number.isFinite(value) &&
-          value >= 20 &&
-          value <= 600;
-
-
-        input.classList.toggle(
-          "invalid",
-          !glucoseValid
-        );
-
-
-        validation.classList.toggle(
-          "visible",
-          !glucoseValid
-        );
-
-
-        if (glucoseValid) {
-
-          screeningData.tier2.glucose =
-            value;
-
-          screeningData.tier2.glucoseScore =
-            calculateGlucoseScore(value);
-
-        } else {
-
-          screeningData.tier2.glucose =
-            null;
-
-          screeningData.tier2.glucoseScore =
-            null;
-
-          valid = false;
-
-        }
-
-      }
-
-
-      if (
-        screeningData.tier2.lipidAvailable
-      ) {
-
-        const ldlInput =
-          document.getElementById(
-            "ldlInput"
-          );
-
-        const hdlInput =
-          document.getElementById(
-            "hdlInput"
-          );
-
-        const validation =
-          document.getElementById(
-            "lipidValidation"
-          );
-
-
-        const ldl =
-          Number(ldlInput.value);
-
-        const hdl =
-          Number(hdlInput.value);
-
-
-        const lipidValid =
-          Number.isFinite(ldl) &&
-          Number.isFinite(hdl) &&
-          ldl > 0 &&
-          hdl > 0 &&
-          ldl <= 500 &&
-          hdl <= 200;
-
-
-        ldlInput.classList.toggle(
-          "invalid",
-          !lipidValid
-        );
-
-        hdlInput.classList.toggle(
-          "invalid",
-          !lipidValid
-        );
-
-        validation.classList.toggle(
-          "visible",
-          !lipidValid
-        );
-
-
-        if (lipidValid) {
-
-          screeningData.tier2.ldl =
-            ldl;
-
-          screeningData.tier2.hdl =
-            hdl;
-
-          screeningData.tier2.lipidRatio =
-            ldl / hdl;
-
-          screeningData.tier2.lipidScore =
-            calculateLipidScore(
-              screeningData.tier2.lipidRatio
-            );
-
-          renderLipidPreview();
-
-        } else {
-
-          screeningData.tier2.ldl =
-            null;
-
-          screeningData.tier2.hdl =
-            null;
-
-          screeningData.tier2.lipidRatio =
-            null;
-
-          screeningData.tier2.lipidScore =
-            null;
-
-          renderLipidPreview();
-
-          valid = false;
-
-        }
-
-      }
-
-
-      return valid;
-
-    }
-
-
-    function handleTier2Input() {
-
-      validateTier2Inputs();
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function selectRecent(
-      type,
-      isRecent
-    ) {
-
-      if (type === "glucose") {
-
-        screeningData.tier2.glucoseRecent =
-          isRecent;
-
-
-        document
-          .getElementById("glucoseRecentYes")
-          .classList.toggle(
-            "selected",
-            isRecent
-          );
-
-
-        document
-          .getElementById("glucoseRecentNo")
-          .classList.toggle(
-            "selected",
-            !isRecent
-          );
-
-      }
-
-
-      if (type === "lipid") {
-
-        screeningData.tier2.lipidRecent =
-          isRecent;
-
-
-        document
-          .getElementById("lipidRecentYes")
-          .classList.toggle(
-            "selected",
-            isRecent
-          );
-
-
-        document
-          .getElementById("lipidRecentNo")
-          .classList.toggle(
-            "selected",
-            !isRecent
-          );
-
-      }
-
-
-      updateQuestionnaireButton();
-
-    }
-
-
-    function calculateGlucoseScore(
-      value
-    ) {
-
-      if (value < 140) {
-        return 0;
-      }
-
-      if (value < 200) {
-        return 15;
-      }
-
-      return 30;
-
-    }
-
-
-    function calculateLipidScore(
-      ratio
-    ) {
-
-      if (ratio < 2.5) {
-        return 0;
-      }
-
-      if (ratio <= 3.5) {
-        return 10;
-      }
-
-      return 20;
-
-    }
-
-
-    function renderLipidPreview() {
-
-      const value =
-        document.getElementById(
-          "lipidRatioPreview"
-        );
-
-      const category =
-        document.getElementById(
-          "lipidRatioCategory"
-        );
-
-
-      if (
-        screeningData.tier2.lipidRatio === null
-      ) {
-
-        value.textContent = "—";
-
-        category.textContent =
-          "Enter LDL and HDL";
-
-        return;
-
-      }
-
-
-      const ratio =
-        screeningData.tier2.lipidRatio;
-
-
-      value.textContent =
-        ratio.toFixed(2);
-
-
-      if (ratio < 2.5) {
-
-        category.textContent =
-          "Proposed score · +0";
-
-      } else if (ratio <= 3.5) {
-
-        category.textContent =
-          "Proposed score · +10";
-
-      } else {
-
-        category.textContent =
-          "Proposed score · +20";
-
-      }
-
-    }
-
-
-    function calculateTier2Score() {
-
-      if (
-        !screeningData.tier2.triggered
-      ) {
-
-        screeningData.tier2.total = 0;
-
-        return 0;
-
-      }
-
-
-      if (
-        screeningData.tier2.availability ===
-        "none"
-      ) {
-
-        screeningData.tier2.total = 0;
-
-        return 0;
-
-      }
-
-
-      if (
-        screeningData.tier2.availability !==
-        "available"
-      ) {
-
-        return null;
-
-      }
-
-
-      let total = 0;
-
-
-      if (
-        screeningData.tier2.glucoseAvailable
-      ) {
-
-        if (
-          screeningData.tier2.glucoseScore === null ||
-          screeningData.tier2.glucoseRecent === null
-        ) {
-
-          return null;
-
-        }
-
-        total +=
-          screeningData.tier2.glucoseScore;
-
-      }
-
-
-      if (
-        screeningData.tier2.lipidAvailable
-      ) {
-
-        if (
-          screeningData.tier2.lipidScore === null ||
-          screeningData.tier2.lipidRecent === null
-        ) {
-
-          return null;
-
-        }
-
-        total +=
-          screeningData.tier2.lipidScore;
-
-      }
-
-
-      if (
-        !screeningData.tier2.glucoseAvailable &&
-        !screeningData.tier2.lipidAvailable
-      ) {
-
-        return null;
-
-      }
-
-
-      screeningData.tier2.total =
-        total;
-
-
-      return total;
-
-    }
-
-
-    /* =======================================================
-       FINAL SCORE
-    ======================================================== */
-
-    function calculateFinalScore() {
-
-      const tier1 =
-        screeningData.tier1.total;
-
-
-      if (tier1 === null) {
-        return null;
-      }
-
-
-      const tier2 =
-        calculateTier2Score();
-
-
-      if (tier2 === null) {
-        return null;
-      }
-
-
-      const finalTotal =
-        tier1 + tier2;
-
-
-      screeningData.final.total =
-        finalTotal;
-
-
-      if (finalTotal <= 50) {
-
-        screeningData.final.category =
-          "Low screening risk";
-
-      } else if (finalTotal <= 85) {
-
-        screeningData.final.category =
-          "Moderate screening risk";
-
-      } else {
-
-        screeningData.final.category =
-          "High screening risk";
-
-      }
-
-
-      return finalTotal;
-
-    }
-
-
-    function renderFinalAssessment() {
-
-      const total =
-        calculateFinalScore();
-
-
-      const score =
-        document.getElementById(
-          "finalScore"
-        );
-
-      const category =
-        document.getElementById(
-          "finalCategory"
-        );
-
-      const text =
-        document.getElementById(
-          "finalText"
-        );
-
-      const breakdown =
-        document.getElementById(
-          "finalBreakdown"
-        );
-
-      const card =
-        document.getElementById(
-          "finalResultCard"
-        );
-
-      const actionBox =
-        document.getElementById(
-          "finalActionBox"
-        );
-
-
-      if (total === null) {
-
-        score.textContent =
-          "—";
-
-        category.textContent =
-          "Incomplete";
-
-        text.textContent =
-          "The final assessment cannot be calculated until all selected measurements are complete.";
-
-        breakdown.innerHTML =
-          "";
-
-        actionBox.innerHTML = `
-          <h3>Complete the selected information</h3>
-          <p>
-            ABEEM will not treat missing measurements as zero.
-            Return to the previous step and complete the
-            measurements you chose to include.
-          </p>
-        `;
-
-        return;
-
-      }
-
-
-      score.textContent =
-        total;
-
-
-      category.textContent =
-        screeningData.final.category;
-
-
-      card.className =
-        "result-card " +
-        getRiskClass(
-          screeningData.final.category
-        );
-
-
-      text.textContent =
-        getFinalRiskDescription(
-          screeningData.final.category
-        );
-
-
-      breakdown.innerHTML = `
-
-        ${breakdownRow(
-          "Tier 1 score",
-          screeningData.tier1.total
-        )}
-
-        ${breakdownRow(
-          "Tier 2 contribution",
-          screeningData.tier2.total
-        )}
-
-        ${breakdownRow(
-          "Final score",
-          screeningData.final.total
-        )}
-
-      `;
-
-
-      renderFinalAction(
-        actionBox,
-        screeningData.final.category
+      switchScreen(
+        'screen05'
       );
 
     }
 
 
-    function renderFinalAction(
-      box,
-      category
+    function displayResults(
+      ageScore,
+      waistScore
     ) {
 
+      const scoreEl =
+        document.getElementById(
+          'resultScoreValue'
+        );
+
+
+      const catEl =
+        document.getElementById(
+          'resultCategoryTitle'
+        );
+
+
+      const descEl =
+        document.getElementById(
+          'resultDescriptionText'
+        );
+
+
+      const cardContainer =
+        document.getElementById(
+          'resultCardContainer'
+        );
+
+
+      const breakdownList =
+        document.getElementById(
+          'scoreBreakdownList'
+        );
+
+
+      const recText =
+        document.getElementById(
+          'actionRecommendationText'
+        );
+
+
+      scoreEl.innerText =
+        screeningData.totalScore;
+
+
+      cardContainer.className =
+        'result-card';
+
+
+      let category = '';
+
+      let desc = '';
+
+      let recommendation = '';
+
+
       if (
-        category ===
-        "Low screening risk"
+        screeningData.totalScore < 7
       ) {
 
-        box.innerHTML = `
-          <h3>Stay aware.</h3>
-          <p>
-            The proposed field-action plan is basic public-health
-            education around balanced diet and healthy lifestyle,
-            with rescreening considered after about 3 years.
-            This is a prototype pathway and should be confirmed
-            by a healthcare professional before field deployment.
-          </p>
-        `;
+        cardContainer.classList.add(
+          'risk-low'
+        );
+
+
+        category =
+          'Low Risk';
+
+
+        desc =
+          'Estimated risk of developing Type 2 diabetes within 10 years is low.';
+
+
+        recommendation =
+          'Maintain a balanced diet, stay physically active, and repeat screening during your next annual wellness checkup.';
 
       } else if (
-        category ===
-        "Moderate screening risk"
+        screeningData.totalScore >= 7 &&
+        screeningData.totalScore < 12
       ) {
 
-        box.innerHTML = `
-          <h3>Pay closer attention.</h3>
-          <p>
-            The proposed pathway focuses on modifiable factors
-            such as abdominal adiposity, stress and alcohol-related
-            risk, with follow-up in approximately 6–12 months.
-            Clinical follow-up should be guided by a qualified
-            healthcare professional.
-          </p>
-        `;
+        cardContainer.classList.add(
+          'risk-moderate'
+        );
+
+
+        category =
+          'Moderate Risk';
+
+
+        desc =
+          'Slightly elevated screening score. Worth noting lifestyle factors.';
+
+
+        recommendation =
+          'Consider incorporating regular exercise, reducing dietary sugars, and discussing these results with your healthcare provider.';
 
       } else {
 
-        box.innerHTML = `
-          <h3>Seek further evaluation.</h3>
-          <p>
-            The proposed pathway recommends medical evaluation,
-            potentially including HbA1c, fasting plasma glucose
-            and physician review. ABEEM itself does not diagnose
-            diabetes and should not replace clinical assessment.
-          </p>
-        `;
-
-      }
-
-    }
-
-
-    /* =======================================================
-       RISK HELPERS
-    ======================================================== */
-
-    function getRiskClass(
-      category
-    ) {
-
-      if (
-        category.includes("Low")
-      ) {
-
-        return "risk-low";
-
-      }
-
-
-      if (
-        category.includes("Moderate")
-      ) {
-
-        return "risk-moderate";
-
-      }
-
-
-      return "risk-high";
-
-    }
-
-
-    function getRiskDescription(
-      category
-    ) {
-
-      if (
-        category ===
-        "Low screening risk"
-      ) {
-
-        return (
-          "The current Tier 1 information suggests a lower screening-risk picture. " +
-          "This does not mean diabetes has been ruled out."
+        cardContainer.classList.add(
+          'risk-high'
         );
 
-      }
+
+        category =
+          'Elevated Risk / High Concern';
 
 
-      if (
-        category ===
-        "Moderate screening risk"
-      ) {
-
-        return (
-          "The current information suggests a moderate screening-risk picture. " +
-          "The proposed Tier 2 pathway may provide additional information."
-        );
-
-      }
+        desc =
+          'Your screening indicators suggest a higher risk profile.';
 
 
-      return (
-        "The current information suggests a higher screening-risk picture. " +
-        "Further medical evaluation may be appropriate."
-      );
-
-    }
-
-
-    function getFinalRiskDescription(
-      category
-    ) {
-
-      if (
-        category ===
-        "Low screening risk"
-      ) {
-
-        return (
-          "The available screening information falls within the proposed low-risk range. " +
-          "Continue awareness and appropriate healthy-lifestyle practices."
-        );
+        recommendation =
+          'We strongly recommend consulting a healthcare professional for follow-up blood glucose testing (such as HbA1c or fasting plasma glucose).';
 
       }
 
 
-      if (
-        category ===
-        "Moderate screening risk"
-      ) {
-
-        return (
-          "The available screening information falls within the proposed moderate-risk range. " +
-          "Closer attention and appropriate follow-up may be warranted."
-        );
-
-      }
+      catEl.innerText =
+        category;
 
 
-      return (
-        "The available screening information falls within the proposed high-risk range. " +
-        "Further medical evaluation is recommended rather than treating this result as a diagnosis."
-      );
-
-    }
+      descEl.innerText =
+        desc;
 
 
-    function breakdownRow(
-      label,
-      score
-    ) {
+      recText.innerText =
+        recommendation;
 
-      return `
+
+      breakdownList.innerHTML = `
+
         <div class="breakdown-row">
-          <span>${label}</span>
-          <span class="breakdown-score">
-            ${score >= 0 ? "+" : ""}${score}
+
+          <span>
+            Age Factor (${screeningData.age} yrs)
           </span>
+
+          <span class="breakdown-score">
+            +${ageScore} pts
+          </span>
+
         </div>
+
+
+        <div class="breakdown-row">
+
+          <span>
+            Waist Measurement (${screeningData.waist} ${screeningData.waistUnit})
+          </span>
+
+          <span class="breakdown-score">
+            +${waistScore} pts
+          </span>
+
+        </div>
+
+
+        <div class="breakdown-row">
+
+          <span>
+            Physical Activity
+          </span>
+
+          <span class="breakdown-score">
+            +${screeningData.activityScore} pts
+          </span>
+
+        </div>
+
+
+        <div class="breakdown-row">
+
+          <span>
+            Family History
+          </span>
+
+          <span class="breakdown-score">
+            +${screeningData.familyScore} pts
+          </span>
+
+        </div>
+
+
+        <div class="breakdown-row">
+
+          <span>
+            Blood Pressure History
+          </span>
+
+          <span class="breakdown-score">
+            +${screeningData.bpScore} pts
+          </span>
+
+        </div>
+
+
+        <div class="breakdown-row">
+
+          <span>
+            Prior Blood Sugar History
+          </span>
+
+          <span class="breakdown-score">
+            +${screeningData.sugarScore} pts
+          </span>
+
+        </div>
+
       `;
 
     }
 
 
-    /* =======================================================
-       QUESTION VALIDATION
-    ======================================================== */
+    /* -------------------------------------------------------
+       RESET
+    ------------------------------------------------------- */
 
-    function isStepComplete(
-      step
-    ) {
 
-      switch (step) {
+    function resetScreeningSession() {
 
-        case 1:
+      currentMode = null;
 
-          return validateAgeInput();
+      currentSpread = 0;
 
+      currentQuestionIndex = 0;
 
-        case 2:
 
-          return screeningData.sex !== null;
+      screeningData = {
 
+        age: null,
 
-        case 3:
+        waist: null,
 
-          return (
-            screeningData.familyHistory.score !== null
-          );
+        waistUnit: 'cm',
 
+        activity: null,
 
-        case 4:
+        activityScore: 0,
 
-          return (
-            screeningData.physicalActivity.score !== null
-          );
+        family: null,
 
+        familyScore: 0,
 
-        case 5:
+        bp: null,
 
-          return validateMeasurementInputs();
+        bpScore: 0,
 
+        medication: null,
 
-        case 6:
+        sleepMedication: null,
 
-          return (
-            screeningData.stress.sleep !== null &&
-            screeningData.stress.physical !== null &&
-            screeningData.stress.financial !== null &&
-            screeningData.stress.relax !== null
-          );
+        sleepDisturbance: null,
 
+        sugar: null,
 
-        case 7:
+        sugarScore: 0,
 
-          if (
-            screeningData.alcohol.never === true
-          ) {
+        totalScore: 0
 
-            return true;
-
-          }
-
-
-          return (
-            screeningData.alcohol.never === false &&
-            screeningData.alcohol.frequency !== null &&
-            screeningData.alcohol.quantity !== null &&
-            screeningData.alcohol.binge !== null
-          );
-
-
-        case 8:
-
-          return (
-            screeningData.tier1.total !== null
-          );
-
-
-        case 9:
-
-          if (
-            !screeningData.tier2.triggered
-          ) {
-
-            return true;
-
-          }
-
-
-          if (
-            screeningData.tier2.availability ===
-            "none"
-          ) {
-
-            return true;
-
-          }
-
-
-          if (
-            screeningData.tier2.availability !==
-            "available"
-          ) {
-
-            return false;
-
-          }
-
-
-          if (
-            !screeningData.tier2.glucoseAvailable &&
-            !screeningData.tier2.lipidAvailable
-          ) {
-
-            return false;
-
-          }
-
-
-          if (
-            screeningData.tier2.glucoseAvailable
-          ) {
-
-            if (
-              screeningData.tier2.glucose === null ||
-              screeningData.tier2.glucoseRecent === null
-            ) {
-
-              return false;
-
-            }
-
-          }
-
-
-          if (
-            screeningData.tier2.lipidAvailable
-          ) {
-
-            if (
-              screeningData.tier2.lipidRatio === null ||
-              screeningData.tier2.lipidRecent === null
-            ) {
-
-              return false;
-
-            }
-
-          }
-
-
-          return true;
-
-
-        case 10:
-
-          return true;
-
-
-        default:
-
-          return false;
-
-      }
-
-    }
-
-
-    /* =======================================================
-       QUESTION NAVIGATION
-    ======================================================== */
-
-    function nextQuestionnaireStep() {
-
-      if (
-        !isStepComplete(
-          currentQuestionStep
-        )
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        currentQuestionStep === 1
-      ) {
-
-        screeningData.age =
-          Number(
-            document.getElementById(
-              "ageInput"
-            ).value
-          );
-
-      }
-
-
-      if (
-        currentQuestionStep === 5
-      ) {
-
-        validateMeasurementInputs();
-
-      }
-
-
-      if (
-        currentQuestionStep === 6
-      ) {
-
-        calculateStressScore();
-
-      }
-
-
-      if (
-        currentQuestionStep === 7
-      ) {
-
-        calculateAlcoholScore();
-
-      }
-
-
-      if (
-        currentQuestionStep === 8
-      ) {
-
-        calculateTier1Score();
-
-      }
-
-
-      if (
-        currentQuestionStep === 9
-      ) {
-
-        calculateTier2Score();
-
-      }
-
-
-      if (
-        currentQuestionStep <
-        totalQuestionSteps
-      ) {
-
-        currentQuestionStep++;
-
-        showQuestionnaireStep(
-          currentQuestionStep
-        );
-
-      }
-
-    }
-
-
-    function previousQuestionnaireStep() {
-
-      if (
-        currentQuestionStep > 1
-      ) {
-
-        currentQuestionStep--;
-
-        showQuestionnaireStep(
-          currentQuestionStep
-        );
-
-      } else {
-
-        showScreen(
-          "screen04",
-          "screen03"
-        );
-
-      }
-
-    }
-
-
-    function showQuestionnaireStep(
-      step
-    ) {
-
-      currentQuestionStep =
-        step;
-
-
-      for (
-        let i = 1;
-        i <= totalQuestionSteps;
-        i++
-      ) {
-
-        const section =
-          document.getElementById(
-            `questionStep${i}`
-          );
-
-        if (section) {
-
-          section.classList.toggle(
-            "active",
-            i === step
-          );
-
-        }
-
-      }
-
-
-      const percentage =
-        (
-          step /
-          totalQuestionSteps
-        ) * 100;
+      };
 
 
       document
-        .getElementById(
-          "questionProgress"
-        )
-        .style.width =
-        `${percentage}%`;
+        .getElementById('modeSelf')
+        .classList
+        .remove('selected');
 
 
       document
-        .getElementById(
-          "questionProgressLabel"
+        .getElementById('modeOther')
+        .classList
+        .remove('selected');
+
+
+      document
+        .getElementById('modeContinue')
+        .setAttribute(
+          'disabled',
+          'true'
+        );
+
+
+      document
+        .getElementById('ageInput')
+        .value = '';
+
+
+      document
+        .getElementById('waistInput')
+        .value = '';
+
+
+      /*
+        Reset conditional sleep section.
+      */
+
+      const sleepSection =
+        document.getElementById(
+          'sleepDisturbanceSection'
+        );
+
+
+      if (sleepSection) {
+
+        sleepSection.style.display =
+          'none';
+
+      }
+
+
+      /*
+        Clear all questionnaire selections.
+      */
+
+      document
+        .querySelectorAll(
+          '.option-button'
         )
-        .textContent =
-        `Step ${step} of ${totalQuestionSteps}`;
-
-
-      const back =
-        document.getElementById(
-          "questionnaireBack"
+        .forEach(btn =>
+          btn.classList.remove(
+            'selected'
+          )
         );
 
 
-      if (back) {
-
-        back.style.opacity =
-          step === 1
-            ? "0.65"
-            : "1";
-
-      }
-
-
-      if (step === 8) {
-
-        renderTier1Preview();
-
-        /*
-          Tier 2 trigger is evaluated from Tier 1.
-        */
-
-        screeningData.tier2.triggered =
-          screeningData.tier1.total >= 50;
-
-      }
-
-
-      if (step === 9) {
-
-        prepareTier2Screen();
-
-      }
-
-
-      if (step === 10) {
-
-        renderFinalAssessment();
-
-      }
-
-
-      updateQuestionnaireButton();
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      switchScreen(
+        'screen01'
+      );
 
     }
-
-
-    function updateQuestionnaireButton() {
-
-      const button =
-        document.getElementById(
-          "questionnaireContinue"
-        );
-
-
-      if (!button) {
-        return;
-      }
-
-
-      if (
-        currentQuestionStep >=
-        totalQuestionSteps
-      ) {
-
-        button.style.display =
-          "none";
-
-        return;
-
-      }
-
-
-      button.style.display =
-        "inline-flex";
-
-
-      button.disabled =
-        !isStepComplete(
-          currentQuestionStep
-        );
-
-    }
-
-
-    /* =======================================================
-       INITIALISATION
-    ======================================================== */
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      () => {
-
-        renderCurrentSpread();
-
-        showQuestionnaireStep(1);
-
-      }
-    );
 
   </script>
 
