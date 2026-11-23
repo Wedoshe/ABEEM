@@ -3509,17 +3509,13 @@
 
     function continueFromMode() {
 
-      if (!selectedMode) {
-        return;
-      }
+  if (!selectedMode) {
+    return;
+  }
 
-      currentBookSpread = 0;
+  beginScreening();
 
-      renderCurrentSpread();
-
-      showScreen("screen02", "screen03");
-
-    }
+}
 
 
     /* =======================================================
@@ -3648,7 +3644,7 @@
 
       showQuestionnaireStep(1);
 
-      showScreen("screen03", "screen04");
+      showScreen("screen02", "screen04");
 
       setTimeout(() => {
 
